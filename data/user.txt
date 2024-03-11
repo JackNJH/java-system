@@ -1,0 +1,6 @@
+U1, Jaccues, pass123, Manager
+U2, Presto, 321, Manager
+U3, Jack, notme, Technician
+U4, Bob, hibob, Technician
+U5, Donkey, password, Technician
+U6, Boozi, boozi, Technician
