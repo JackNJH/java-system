@@ -25,7 +25,6 @@ public class Register extends javax.swing.JFrame {
         }
         br.close();
         lastUserID++;
-        bw = new BufferedWriter(new FileWriter("data/user.txt", true)); 
     }
 
     @SuppressWarnings("unchecked")
@@ -40,10 +39,10 @@ public class Register extends javax.swing.JFrame {
         cpasswordLabel = new javax.swing.JLabel();
         cpasswordField = new javax.swing.JTextField();
         userroleLabel = new javax.swing.JLabel();
-        userroleField = new javax.swing.JTextField();
         registerBtn = new javax.swing.JButton();
         loginText = new javax.swing.JLabel();
         loginBtn = new javax.swing.JButton();
+        userroleField = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,14 +77,6 @@ public class Register extends javax.swing.JFrame {
         userroleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         userroleLabel.setText("User Role:");
 
-        userroleField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        userroleField.setText("Technician / Manager");
-        userroleField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userroleFieldActionPerformed(evt);
-            }
-        });
-
         registerBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         registerBtn.setText("Register");
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -104,42 +95,49 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        userroleField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        userroleField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Technician" }));
+        userroleField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userroleFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(loginTitle))
+                        .addComponent(passwordLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(189, 189, 189)
+                        .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(144, 144, 144))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(186, 186, 186)
+                            .addComponent(loginTitle))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(119, 119, 119)
+                            .addComponent(usernameLabel)
+                            .addGap(18, 18, 18)
+                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(loginText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(loginBtn))
+                        .addComponent(loginBtn)
+                        .addGap(62, 62, 62))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cpasswordLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(cpasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(passwordLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(userroleLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(userroleField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(usernameLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(144, 144, 144)))))
+                            .addComponent(cpasswordLabel)
+                            .addComponent(userroleLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cpasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                            .addComponent(userroleField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,13 +161,13 @@ public class Register extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userroleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userroleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addGap(39, 39, 39)
                 .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginText)
                     .addComponent(loginBtn))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -183,37 +181,49 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cpasswordFieldActionPerformed
 
-    private void userroleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userroleFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userroleFieldActionPerformed
-
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         String cpassword = cpasswordField.getText().trim();
-        String userRole = userroleField.getText().trim();
-        
+        String userRole = userroleField.getSelectedItem().toString();
+
         if (!password.equals(cpassword)) {
             JOptionPane.showMessageDialog(this, "Passwords do not match", "Registration Error", JOptionPane.ERROR_MESSAGE);
             return; //Exit method
         }
-        
-        if (!userRole.equalsIgnoreCase("Manager") && !userRole.equalsIgnoreCase("Technician")) {
-            JOptionPane.showMessageDialog(this, "Invalid user role. Please enter 'Manager' or 'Technician'.", "Registration Error", JOptionPane.ERROR_MESSAGE);
-            return; // Exit method
-        }
+
         try {
+            br = new BufferedReader(new FileReader("data/user.txt"));
+            String line;
+            boolean usernameExists = false;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length > 1 && parts[1].equalsIgnoreCase(username)) {
+                    usernameExists = true;
+                    break;
+                }
+            }
+            br.close();
+
+            if (usernameExists) {
+                JOptionPane.showMessageDialog(this, "Username already exists", "Registration Error", JOptionPane.ERROR_MESSAGE);
+                return; // Exit method
+            }
+
+            bw = new BufferedWriter(new FileWriter("data/user.txt", true));
             bw.write("U"+lastUserID+", "+username+", "+password+", "+userRole);
             bw.newLine();
             JOptionPane.showMessageDialog(this, "User registered successfully", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
-            openLoginPage();
+            openLoginPage(); //Open login page upon successful registration
+            
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            System.err.println("Error writing to file or reading file: " + e.getMessage());
         } finally {
             try {
-                bw.close();
+                if (br != null) br.close();
+                if (bw != null) bw.close();
             } catch (IOException e) {
-                System.err.println("Error closing BufferedWriter: " + e.getMessage());
+                System.err.println("Error closing streams: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_registerBtnActionPerformed
@@ -222,6 +232,10 @@ public class Register extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         openLoginPage();
     }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void userroleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userroleFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userroleFieldActionPerformed
 
     private void openLoginPage() {
     try {
@@ -257,7 +271,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JButton registerBtn;
     private javax.swing.JTextField usernameField;
     private javax.swing.JLabel usernameLabel;
-    private javax.swing.JTextField userroleField;
+    private javax.swing.JComboBox<String> userroleField;
     private javax.swing.JLabel userroleLabel;
     // End of variables declaration//GEN-END:variables
 }

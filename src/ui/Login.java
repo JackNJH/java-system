@@ -6,10 +6,11 @@ public class Login extends javax.swing.JFrame {
     
     private String userRole;
     private BufferedReader br;
+    private BufferedWriter bw;
 
     public Login() throws IOException{
         initComponents();
-        br = new BufferedReader(new FileReader("data/user.txt"));
+        bw = new BufferedWriter(new FileWriter("data/login_records.txt", true));
     }
 
     @SuppressWarnings("unchecked")
@@ -90,7 +91,7 @@ public class Login extends javax.swing.JFrame {
                         .addGap(250, 250, 250)
                         .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
+                        .addGap(183, 183, 183)
                         .addComponent(registerText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(registerBtn)))
@@ -111,11 +112,11 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerText)
                     .addComponent(registerBtn))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -131,6 +132,9 @@ public class Login extends javax.swing.JFrame {
         boolean loginSuccess = checkLogin(enteredUsername, enteredPassword);
 
         if (loginSuccess){
+            
+            storeLoginRecord(enteredUsername, userRole);
+            
             if ("Manager".equals(userRole)){
                 JOptionPane.showMessageDialog(this, "Logged in as Manager", "Login Success", JOptionPane.INFORMATION_MESSAGE);
                 ManagerHomePage managerHP = new ManagerHomePage();
@@ -138,9 +142,8 @@ public class Login extends javax.swing.JFrame {
             }
             else if ("Technician".equals(userRole)){
                 JOptionPane.showMessageDialog(this, "Logged in as Technician", "Login Success", JOptionPane.INFORMATION_MESSAGE);
-                
             }
-            
+
             try {
                 br.close(); //Close after successful login
             } catch (IOException e) {
@@ -172,7 +175,7 @@ public class Login extends javax.swing.JFrame {
     
     private boolean checkLogin(String username, String password) {
         try {
-            br = new BufferedReader(new FileReader("data/user.txt"));
+            br = new BufferedReader(new FileReader("data/user.txt")); //Reset the BufferedReader to the file beginning
 
             String line;
             while ((line = br.readLine()) != null) {
@@ -201,7 +204,22 @@ public class Login extends javax.swing.JFrame {
         return false;
     }
 
+    private void storeLoginRecord(String username, String role) {
+        try {
+            bw.write(username+", "+role);
+            bw.newLine();
+        } catch (IOException e) {
+            System.err.println("Error writing login record: " + e.getMessage());
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                System.err.println("Error closing BufferedWriter: " + e.getMessage());
+            }
+        }
+    }
 
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
