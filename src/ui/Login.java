@@ -1,6 +1,8 @@
 package ui;
 import java.io.*;
 import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Login extends javax.swing.JFrame {
     
@@ -125,7 +127,10 @@ public class Login extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
-
+    
+    // Initialize formatter function
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy h:mma");
+    
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String enteredUsername = usernameField.getText().trim();
         String enteredPassword = passwordField.getText().trim();
@@ -206,7 +211,9 @@ public class Login extends javax.swing.JFrame {
 
     private void storeLoginRecord(String username, String role) {
         try {
-            bw.write(username+", "+role);
+            LocalDateTime now = LocalDateTime.now();
+            String formattedDateTime = formatter.format(now);
+            bw.write(username+", "+role+", "+formattedDateTime);
             bw.newLine();
         } catch (IOException e) {
             System.err.println("Error writing login record: " + e.getMessage());

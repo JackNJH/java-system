@@ -26,4 +26,8 @@ The structure of each `.txt` file used in the system:
 - Contains post-appointment information.
     - `{customerFeedback, paymentStatus, paymentDate, paymentAmount, technicianFeedback}`
 
+## login_records.txt
+- Contains login records.
+    - `{username, role, date}`
+
 For columns that store data with comments, encapsulate the user remarks in quotes. For example: "Likes apples, oranges". Parsing data this way, we can ignore the commas that occur within quotes. Data structure can be changed if met with any difficulties during implementation.
