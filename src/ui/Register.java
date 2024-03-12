@@ -1,6 +1,7 @@
 package ui;
 import java.io.*;
 import javax.swing.JOptionPane;
+import utils.InputValidator;
 
 
 public class Register extends javax.swing.JFrame {
@@ -13,6 +14,8 @@ public class Register extends javax.swing.JFrame {
         initComponents();
         br = new BufferedReader(new FileReader("data/user.txt"));
         String line;
+        
+        //Find the biggest userID in file
         while ((line = br.readLine()) != null) {
             String[] parts = line.split(", ");
             if (parts.length > 0) {
@@ -191,7 +194,17 @@ public class Register extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Passwords do not match", "Registration Error", JOptionPane.ERROR_MESSAGE);
             return; //Exit method
         }
+        
+        if (!InputValidator.isValidUsername(username)) {
+            JOptionPane.showMessageDialog(this, "Invalid username. Special characters are not allowed.", "Registration Error", JOptionPane.ERROR_MESSAGE);
+            return; // Exit method
+        }
 
+        if (!InputValidator.isValidPassword(password)) {
+            JOptionPane.showMessageDialog(this, "Invalid password. Password cannot contain commas.", "Registration Error", JOptionPane.ERROR_MESSAGE);
+            return; // Exit method
+        }
+        
         try {
             br = new BufferedReader(new FileReader("data/user.txt"));
             String line;
