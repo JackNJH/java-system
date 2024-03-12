@@ -1,20 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package javasystem;
 
-/**
- *
- * @author User
- */
-public class JavaSystem {
+import java.io.IOException;
+import ui.Login;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class JavaSystem {
+    public static void main(String[] args) throws IOException {
+        // Initialize and display the Login GUI
+        Login loginFrame = new Login();
+        loginFrame.setVisible(true);
     }
-    
 }
+

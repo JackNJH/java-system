@@ -1,0 +1,209 @@
+package ui;
+import java.io.*;
+import javax.swing.JOptionPane;
+
+public class Login extends javax.swing.JFrame {
+    
+    private String userRole;
+    private BufferedReader br;
+
+    public Login() throws IOException{
+        initComponents();
+        br = new BufferedReader(new FileReader("data/user.txt"));
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        passwordLabel = new javax.swing.JLabel();
+        loginTitle = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
+        passwordField = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
+        loginBtn = new javax.swing.JButton();
+        registerText = new javax.swing.JLabel();
+        registerBtn = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        passwordLabel.setText("Password:");
+
+        loginTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        loginTitle.setText("LOGIN UI");
+
+        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameLabel.setText("Username:");
+
+        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+
+        usernameField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameFieldActionPerformed(evt);
+            }
+        });
+
+        loginBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        loginBtn.setText("Login");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
+
+        registerText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        registerText.setText("Are you a new user?");
+
+        registerBtn.setText("Register");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(loginTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usernameLabel)
+                            .addComponent(passwordLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(250, 250, 250)
+                        .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(registerText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(registerBtn)))
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(loginTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(registerText)
+                    .addComponent(registerBtn))
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        String enteredUsername = usernameField.getText().trim();
+        String enteredPassword = passwordField.getText().trim();
+        boolean loginSuccess = checkLogin(enteredUsername, enteredPassword);
+
+        if (loginSuccess){
+            if ("Manager".equals(userRole)){
+                JOptionPane.showMessageDialog(this, "Logged in as Manager", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+                ManagerHomePage managerHP = new ManagerHomePage();
+                managerHP.setVisible(true);
+            }
+            else if ("Technician".equals(userRole)){
+                JOptionPane.showMessageDialog(this, "Logged in as Technician", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+            
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        Register registerFrame = new Register(); //Create an instance of the Register class
+        registerFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_registerBtnActionPerformed
+
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameFieldActionPerformed
+
+    
+    private boolean checkLogin(String username, String password) {
+        try {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] userData = line.split(", ");
+                if (userData.length == 4) {
+                    String storedUsername = userData[1];
+                    String storedPassword = userData[2];
+                    String role = userData[3];
+                    if (username.equals(storedUsername) && password.equals(storedPassword)) {
+                        userRole = role;
+                        return true;
+                    }
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            System.err.println("Error reading user data: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static void main(String args[]) {
+        try {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        new Login().setVisible(true);
+                    } catch (IOException e) {
+                        System.err.println("Error initializing Login: " + e.getMessage());
+                    }
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Error in main: " + e.getMessage());
+        }
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton loginBtn;
+    private javax.swing.JLabel loginTitle;
+    private javax.swing.JTextField passwordField;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JButton registerBtn;
+    private javax.swing.JLabel registerText;
+    private javax.swing.JTextField usernameField;
+    private javax.swing.JLabel usernameLabel;
+    // End of variables declaration//GEN-END:variables
+}
