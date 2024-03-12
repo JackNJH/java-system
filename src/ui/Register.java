@@ -49,38 +49,38 @@ public class Register extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        loginTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        loginTitle.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         loginTitle.setText("REGISTRATION UI");
 
-        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         passwordLabel.setText("Password:");
 
-        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         usernameLabel.setText("Username:");
 
-        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);
             }
         });
 
-        usernameField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
 
-        cpasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cpasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         cpasswordLabel.setText("Confirm Password:");
 
-        cpasswordField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cpasswordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         cpasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cpasswordFieldActionPerformed(evt);
             }
         });
 
-        userroleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        userroleLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         userroleLabel.setText("User Role:");
 
-        registerBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        registerBtn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         registerBtn.setText("Register");
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +88,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        loginText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        loginText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         loginText.setText("Already have an account?");
 
         loginBtn.setText("Login");
@@ -98,7 +98,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        userroleField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        userroleField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         userroleField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Technician" }));
         userroleField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,44 +111,47 @@ public class Register extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(passwordLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(197, 197, 197)
+                        .addComponent(loginTitle))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(144, 144, 144))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(186, 186, 186)
-                            .addComponent(loginTitle))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(119, 119, 119)
-                            .addComponent(usernameLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
                         .addComponent(loginText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(loginBtn)
-                        .addGap(62, 62, 62))
+                        .addComponent(loginBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cpasswordLabel)
-                            .addComponent(userroleLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cpasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
-                            .addComponent(userroleField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(102, Short.MAX_VALUE))
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(passwordLabel)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(70, 70, 70)
+                                    .addComponent(usernameLabel)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(cpasswordLabel)
+                                        .addComponent(userroleLabel))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cpasswordField)
+                                        .addComponent(userroleField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(188, 188, 188)
+                                .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(25, 25, 25)
                 .addComponent(loginTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -164,9 +167,9 @@ public class Register extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userroleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userroleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginText)
                     .addComponent(loginBtn))
@@ -196,7 +199,7 @@ public class Register extends javax.swing.JFrame {
         }
         
         if (!InputValidator.isValidUsername(username)) {
-            JOptionPane.showMessageDialog(this, "Invalid username. Special characters are not allowed.", "Registration Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid username. Special characters deteced or it exceeds 20 characters.", "Registration Error", JOptionPane.ERROR_MESSAGE);
             return; // Exit method
         }
 

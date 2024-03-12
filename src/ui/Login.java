@@ -30,30 +30,30 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         passwordLabel.setText("Password:");
 
-        loginTitle.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        loginTitle.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         loginTitle.setText("LOGIN UI");
 
-        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         usernameLabel.setText("Username:");
 
-        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);
             }
         });
 
-        usernameField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameFieldActionPerformed(evt);
             }
         });
 
-        loginBtn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        loginBtn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         loginBtn.setText("Login");
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,7 +61,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        registerText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        registerText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         registerText.setText("Are you a new user?");
 
         registerBtn.setText("Register");
@@ -78,9 +78,6 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(loginTitle))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usernameLabel)
@@ -90,21 +87,24 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(250, 250, 250)
-                        .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(236, 236, 236)
+                        .addComponent(loginTitle))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
                         .addComponent(registerText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(registerBtn)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                        .addComponent(registerBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(250, 250, 250)
+                        .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(23, 23, 23)
                 .addComponent(loginTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -112,9 +112,9 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(31, 31, 31)
                 .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerText)
                     .addComponent(registerBtn))
