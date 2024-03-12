@@ -141,16 +141,28 @@ public class Login extends javax.swing.JFrame {
                 
             }
             
+            try {
+                br.close(); //Close after successful login
+            } catch (IOException e) {
+                System.err.println("Error closing BufferedReader: " + e.getMessage());
+            }
+            
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+            usernameField.setText("");
+            passwordField.setText("");
         }
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        Register registerFrame = new Register(); //Create an instance of the Register class
-        registerFrame.setVisible(true);
-        this.dispose();
+        try {
+            Register registerFrame = new Register(); // Create an instance of the Register class
+            registerFrame.setVisible(true);
+            this.dispose();
+        } catch (IOException e) {
+            System.err.println("Error opening Registration page: " + e.getMessage());
+        }
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
@@ -160,6 +172,8 @@ public class Login extends javax.swing.JFrame {
     
     private boolean checkLogin(String username, String password) {
         try {
+            br = new BufferedReader(new FileReader("data/user.txt"));
+
             String line;
             while ((line = br.readLine()) != null) {
                 String[] userData = line.split(", ");
@@ -173,27 +187,31 @@ public class Login extends javax.swing.JFrame {
                     }
                 }
             }
-            br.close();
         } catch (IOException e) {
             System.err.println("Error reading user data: " + e.getMessage());
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Error closing BufferedReader: " + e.getMessage());
+            }
         }
         return false;
     }
 
+
     public static void main(String args[]) {
-        try {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    try {
-                        new Login().setVisible(true);
-                    } catch (IOException e) {
-                        System.err.println("Error initializing Login: " + e.getMessage());
-                    }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new Login().setVisible(true);
+                } catch (IOException e) {
+                    System.err.println("Error initializing Login: " + e.getMessage());
                 }
-            });
-        } catch (Exception e) {
-            System.err.println("Error in main: " + e.getMessage());
-        }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
