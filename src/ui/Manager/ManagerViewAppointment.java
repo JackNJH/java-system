@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ui;
+package ui.Manager;
 
 /**
  *
@@ -31,6 +31,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         viewDetailsTable = new javax.swing.JTable();
         appointmentCommentsBtn = new javax.swing.JButton();
         goBackBtn = new javax.swing.JButton();
+        saveChangesBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,19 +40,19 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
 
         viewDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Appointment ID", "Appointed By", "Customer ", "Room", "Appointed To", "Request", "Status", "Completion Date"
+                "Appointment ID", "Customer ", "Room", "Appointed To", "Appointed By", "Appointed Date", "Request", "Add. Comments", "Status"
             }
         ));
         jScrollPane1.setViewportView(viewDetailsTable);
 
         appointmentCommentsBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        appointmentCommentsBtn.setText("Go to Appointment Comments");
+        appointmentCommentsBtn.setText("View Post-appointment Details");
         appointmentCommentsBtn.setToolTipText("");
         appointmentCommentsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,6 +68,9 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
             }
         });
 
+        saveChangesBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        saveChangesBtn.setText("Save Changes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,17 +78,19 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(346, 346, 346)
-                        .addComponent(viewDetailsLabel))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(goBackBtn)
-                                .addGap(617, 617, 617)
-                                .addComponent(appointmentCommentsBtn))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(appointmentCommentsBtn)
+                                .addGap(293, 293, 293)
+                                .addComponent(saveChangesBtn))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(387, 387, 387)
+                        .addComponent(viewDetailsLabel)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +102,8 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(appointmentCommentsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -150,6 +157,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
     private javax.swing.JButton appointmentCommentsBtn;
     private javax.swing.JButton goBackBtn;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton saveChangesBtn;
     private javax.swing.JLabel viewDetailsLabel;
     private javax.swing.JTable viewDetailsTable;
     // End of variables declaration//GEN-END:variables
