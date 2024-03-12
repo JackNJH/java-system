@@ -1,5 +1,5 @@
-AP1, M1, C1, NULL, "Broken socket", Tuesday 5 March 2024, PENDING ASSIGNMENT, NULL, "Non-urgent, but would appreciate help soon.", NULL, NOT COMPLETE, NULL, NULL
-AP2, M2, C2, T2, "Fan isn't spinning anymore", Friday 1 March 2024, COMPLETED, Sunday 3 March 2024, "Pls help its too hot", "Great service!", COMPLETED, Sunday 3 March 2024, 200
-AP3, M1, C4, T4, "Sink is stuck", Sunday 10 March 2024, ASSIGNED, NULL, "Need urgent help", NULL, NOT COMPLETE, NULL, NULL
+AP1, M1, C1, NULL, "Broken socket", Tuesday 5 March 2024, PENDING ASSIGNMENT, NULL, "Non-urgent, but would appreciate help soon."
+AP2, M2, C2, T2, "Fan isn't spinning anymore", Friday 1 March 2024, COMPLETED, Sunday 3 March 2024, "Pls help its too hot"
+AP3, M1, C4, T4, "Sink is stuck", Sunday 10 March 2024, ASSIGNED, NULL, "Need urgent help"
 
 

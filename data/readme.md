@@ -20,6 +20,10 @@ The structure of each `.txt` file used in the system:
 
 ## appointment.txt
 - Contains appointment information.
-    - `{appointmentID, managerID, customerID, technicianID, customerRequest, requestDate, requestStatus, requestCompletionDate, customerComment, customerFeedback, paymentStatus, paymentDate, paymentAmount}`
+    - `{appointmentID, managerID, customerID, technicianID, customerRequest, requestDate, requestStatus, requestCompletionDate, customerComment}`
+
+## receipt.txt
+- Contains post-appointment information.
+    - `{customerFeedback, paymentStatus, paymentDate, paymentAmount, technicianFeedback}`
 
 For columns that store data with comments, encapsulate the user remarks in quotes. For example: "Likes apples, oranges". Parsing data this way, we can ignore the commas that occur within quotes. Data structure can be changed if met with any difficulties during implementation.
