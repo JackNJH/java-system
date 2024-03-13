@@ -130,7 +130,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
     
     // Initialize formatter function
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy h:mma");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy h:mma");
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String enteredUsername = usernameField.getText().trim();

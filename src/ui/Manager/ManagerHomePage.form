@@ -61,9 +61,9 @@
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
-              <Component id="homepageLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="homepageLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
               <Component id="logoutBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -72,17 +72,17 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Component id="homepageLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="logoutBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="homepageLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="loginrecordsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="appointmentsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -136,11 +136,8 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="systemusersTable">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="2" rowCount="4">
-                <Column editable="true" title="Username" type="java.lang.Object"/>
-                <Column editable="true" title="Role" type="java.lang.Object"/>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    userData,&#xa;    new String [] {&#xa;        &quot;Username&quot;, &quot;Role&quot;&#xa;    }&#xa;)" type="code"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
@@ -191,12 +188,8 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="loginrecordsTable">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="4">
-                <Column editable="true" title="Username" type="java.lang.Object"/>
-                <Column editable="true" title="Role" type="java.lang.Object"/>
-                <Column editable="true" title="Login Time" type="java.lang.Object"/>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    loginrecordData,&#xa;    new String [] {&#xa;        &quot;Username&quot;, &quot;Role&quot;, &quot;Login Time&quot;&#xa;    }&#xa;)" type="code"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
@@ -221,6 +214,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="loginrecordsTable.getColumnModel().getColumn(0).setPreferredWidth(100); &#xa;loginrecordsTable.getColumnModel().getColumn(1).setPreferredWidth(100); &#xa;loginrecordsTable.getColumnModel().getColumn(2).setPreferredWidth(200);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -264,7 +260,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(30); // Appointment ID&#xa;appointmentsTable.getColumnModel().getColumn(1).setPreferredWidth(150); // Appointed Date&#xa;appointmentsTable.getColumnModel().getColumn(2).setPreferredWidth(150);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(30); &#xa;appointmentsTable.getColumnModel().getColumn(1).setPreferredWidth(150); &#xa;appointmentsTable.getColumnModel().getColumn(2).setPreferredWidth(150);"/>
           </AuxValues>
         </Component>
       </SubComponents>

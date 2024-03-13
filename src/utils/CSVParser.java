@@ -7,7 +7,7 @@ public class CSVParser {
     public static String[][] parseCSV(String filePath) throws IOException {
         List<String[]> dataList = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { //br automatically closed with try-with-resources statement
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);

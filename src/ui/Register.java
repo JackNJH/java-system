@@ -193,16 +193,25 @@ public class Register extends javax.swing.JFrame {
         String cpassword = cpasswordField.getText().trim();
         String userRole = userroleField.getSelectedItem().toString();
 
+        // Check if any of the fields are empty
+        if (username.isEmpty() || password.isEmpty() || cpassword.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Registration Error", JOptionPane.ERROR_MESSAGE);
+            return; // Exit method
+        }
+        
+        // Check password and confirmed password
         if (!password.equals(cpassword)) {
             JOptionPane.showMessageDialog(this, "Passwords do not match", "Registration Error", JOptionPane.ERROR_MESSAGE);
             return; //Exit method
         }
         
+        // Check whether username has special characters / exceed word liimt
         if (!InputValidator.isValidUsername(username)) {
             JOptionPane.showMessageDialog(this, "Invalid username. Special characters deteced or it exceeds 20 characters.", "Registration Error", JOptionPane.ERROR_MESSAGE);
             return; // Exit method
         }
 
+        // Check whether password has contains commas
         if (!InputValidator.isValidPassword(password)) {
             JOptionPane.showMessageDialog(this, "Invalid password. Password cannot contain commas.", "Registration Error", JOptionPane.ERROR_MESSAGE);
             return; // Exit method

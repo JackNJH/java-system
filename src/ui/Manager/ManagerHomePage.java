@@ -9,6 +9,8 @@ import utils.CSVParser;
 public class ManagerHomePage extends javax.swing.JFrame {
     public ManagerHomePage() {
         displayAppointments();
+        displayUserData();
+        displayLoginData();
         initComponents();
     }
 
@@ -39,12 +41,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
         homepageLabel.setText("Manager Home Page");
 
         systemusersTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
+            userData,
             new String [] {
                 "Username", "Role"
             }
@@ -63,16 +60,14 @@ public class ManagerHomePage extends javax.swing.JFrame {
         loginrecordsLabel.setText("Login Records");
 
         loginrecordsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
+            loginrecordData,
             new String [] {
                 "Username", "Role", "Login Time"
             }
         ));
+        loginrecordsTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        loginrecordsTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        loginrecordsTable.getColumnModel().getColumn(2).setPreferredWidth(200);
         jScrollPane2.setViewportView(loginrecordsTable);
 
         viewAppointmentsBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -92,8 +87,8 @@ public class ManagerHomePage extends javax.swing.JFrame {
                 "ID", "Appointed Date", "Status"
             }
         ));
-        appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(30); // Appointment ID
-        appointmentsTable.getColumnModel().getColumn(1).setPreferredWidth(150); // Appointed Date
+        appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+        appointmentsTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         appointmentsTable.getColumnModel().getColumn(2).setPreferredWidth(150);
         jScrollPane3.setViewportView(appointmentsTable);
 
@@ -136,23 +131,23 @@ public class ManagerHomePage extends javax.swing.JFrame {
                         .addGap(84, 84, 84)))
                 .addGap(39, 39, 39))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(235, 235, 235)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homepageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(159, 159, 159)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(homepageLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(logoutBtn)))
-                .addGap(27, 27, 27)
+                        .addComponent(logoutBtn)
+                        .addGap(48, 48, 48))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(homepageLabel)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginrecordsLabel)
                     .addComponent(appointmentsLabel))
@@ -213,7 +208,28 @@ public class ManagerHomePage extends javax.swing.JFrame {
                 if (row.length >= 7) { 
                     appointmentData[i][0] = row[0]; // appointmentID
                     appointmentData[i][1] = row[5]; // appointedDate
-                    appointmentData[i][2] = row[8]; // status
+                    appointmentData[i][2] = row[6]; // status
+                } else {
+                    //Error handling
+                    System.err.println("Invalid row format at index " + i);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void displayUserData(){
+        String filePath = "data/user.txt";
+        try {
+            String[][] allData = CSVParser.parseCSV(filePath);
+
+            userData = new String[allData.length][2];
+            for (int i = 0; i < allData.length; i++) {
+                String[] row = allData[i];
+                if (row.length >= 3) {
+                    userData[i][0] = row[1]; // userName
+                    userData[i][1] = row[3]; // userRole
                 } else {
                     //Error handling
                     System.err.println("Invalid row format at index " + i);
@@ -225,19 +241,30 @@ public class ManagerHomePage extends javax.swing.JFrame {
         }
     }
     
-    private void displayUserData(){
-        
-    }
-    
-    private int countRows(String filename) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            int count = 0;
-            while (br.readLine() != null) {
-                count++;
+    private void displayLoginData() {
+        String filePath = "data/login_records.txt";
+        try {
+            String[][] allData = CSVParser.parseCSV(filePath);
+
+            loginrecordData = new String[allData.length][3];
+            for (int i = 0; i < allData.length; i++) {
+                String[] row = allData[i];
+                if (row.length >= 3) {
+                    // Loop through the columns and assign values
+                    for (int j = 0; j < 3; j++) {
+                        loginrecordData[i][j] = row[j];
+                    }
+                } else {
+                    // Error handling
+                    System.err.println("Invalid row format at index " + i);
+                }
             }
-            return count;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
