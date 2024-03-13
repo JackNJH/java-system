@@ -1,12 +1,14 @@
 package ui.Manager;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Arrays;
 import ui.Login;
+import utils.CSVParser;
 
 
 public class ManagerHomePage extends javax.swing.JFrame {
-
     public ManagerHomePage() {
+        displayAppointments();
         initComponents();
     }
 
@@ -85,16 +87,14 @@ public class ManagerHomePage extends javax.swing.JFrame {
         appointmentsLabel.setText("Appointments Status");
 
         appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
+            appointmentData,
             new String [] {
-                "Appointment ID", "Appointed Date", "Status"
+                "ID", "Appointed Date", "Status"
             }
         ));
+        appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(30); // Appointment ID
+        appointmentsTable.getColumnModel().getColumn(1).setPreferredWidth(150); // Appointed Date
+        appointmentsTable.getColumnModel().getColumn(2).setPreferredWidth(150);
         jScrollPane3.setViewportView(appointmentsTable);
 
         logoutBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -198,6 +198,47 @@ public class ManagerHomePage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutBtnActionPerformed
 
+    private String[][] appointmentData;
+    private String[][] userData;
+    private String[][] loginrecordData;
+ 
+    private void displayAppointments() {
+        String filePath = "data/appointment.txt";
+        try {
+            String[][] allData = CSVParser.parseCSV(filePath);
+
+            appointmentData = new String[allData.length][3];
+            for (int i = 0; i < allData.length; i++) {
+                String[] row = allData[i];
+                if (row.length >= 7) { 
+                    appointmentData[i][0] = row[0]; // appointmentID
+                    appointmentData[i][1] = row[5]; // appointedDate
+                    appointmentData[i][2] = row[8]; // status
+                } else {
+                    //Error handling
+                    System.err.println("Invalid row format at index " + i);
+                }
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void displayUserData(){
+        
+    }
+    
+    private int countRows(String filename) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            int count = 0;
+            while (br.readLine() != null) {
+                count++;
+            }
+            return count;
+        }
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
