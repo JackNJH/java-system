@@ -9,25 +9,12 @@ public class Register extends javax.swing.JFrame {
     private BufferedReader br;
     private BufferedWriter bw;
     private int lastUserID;
+    private int lastManagerID;
+    private int lastTechnicianID;
     
     public Register() throws IOException {
         initComponents();
-        br = new BufferedReader(new FileReader("data/user.txt"));
-        String line;
-        
-        //Find the biggest userID in file
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(", ");
-            if (parts.length > 0) {
-                String userIdStr = parts[0].substring(1); 
-                int userId = Integer.parseInt(userIdStr);
-                if (userId > lastUserID) {
-                    lastUserID = userId;
-                }
-            }
-        }
-        br.close();
-        lastUserID++;
+        getLastIDs();
     }
 
     @SuppressWarnings("unchecked")
@@ -238,6 +225,19 @@ public class Register extends javax.swing.JFrame {
             bw = new BufferedWriter(new FileWriter("data/user.txt", true));
             bw.write("U"+lastUserID+", "+username+", "+password+", "+userRole);
             bw.newLine();
+            bw.close();
+            
+            // Add user into technician or manager data file as well
+            if (userRole.equalsIgnoreCase("Manager")) {
+                bw = new BufferedWriter(new FileWriter("data/manager.txt", true));
+                bw.write("M" + lastManagerID + ", " + username);
+                bw.newLine();
+            } else if (userRole.equalsIgnoreCase("Technician")) {
+                bw = new BufferedWriter(new FileWriter("data/technician.txt", true));
+                bw.write("T" + lastTechnicianID + ", " + username + ", " + null);
+                bw.newLine();
+            }
+            
             JOptionPane.showMessageDialog(this, "User registered successfully", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
             openLoginPage(); //Open login page upon successful registration
             
@@ -253,6 +253,55 @@ public class Register extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_registerBtnActionPerformed
 
+    private void getLastIDs() throws IOException {
+        
+        //Last user ID
+        br = new BufferedReader(new FileReader("data/user.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split(", ");
+            if (parts.length > 0) {
+                String userIdStr = parts[0].substring(1);
+                int userId = Integer.parseInt(userIdStr);
+                if (userId > lastUserID) {
+                    lastUserID = userId;
+                }
+            }
+        }
+        br.close();
+        lastUserID++;
+        
+        //Last manager ID
+        br = new BufferedReader(new FileReader("data/manager.txt"));
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split(", ");
+            if (parts.length > 0) {
+                String managerIdStr = parts[0].substring(1);
+                int managerId = Integer.parseInt(managerIdStr);
+                if (managerId > lastManagerID) {
+                    lastManagerID = managerId;
+                }
+            }
+        }
+        br.close();
+        lastManagerID++;
+        
+        //Last technician ID
+        br = new BufferedReader(new FileReader("data/manager.txt"));
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split(", ");
+            if (parts.length > 0) {
+                String technicianIdStr = parts[0].substring(1);
+                int technicianId = Integer.parseInt(technicianIdStr);
+                if (technicianId > lastTechnicianID) {
+                    lastTechnicianID = technicianId;
+                }
+            }
+        }
+        br.close();
+        lastTechnicianID++;
+        
+    }
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         openLoginPage();
