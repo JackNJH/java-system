@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Login extends javax.swing.JFrame {
     
+    private String loggedInManager;
     private String userRole;
     private BufferedReader br;
     private BufferedWriter bw;
@@ -142,8 +143,9 @@ public class Login extends javax.swing.JFrame {
             storeLoginRecord(enteredUsername, userRole);
             
             if ("Manager".equals(userRole)){
+                loggedInManager = enteredUsername; 
                 JOptionPane.showMessageDialog(this, "Logged in as Manager", "Login Success", JOptionPane.INFORMATION_MESSAGE);
-                ManagerHomePage managerHP = new ManagerHomePage();
+                ManagerHomePage managerHP = new ManagerHomePage(loggedInManager);
                 managerHP.setVisible(true);
             }
             else if ("Technician".equals(userRole)){

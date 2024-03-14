@@ -10,8 +10,8 @@ public class CSVParser {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { //br automatically closed with try-with-resources statement
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-                for (int i = 0; i < parts.length; i++) {
+                String[] parts = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); //ignore commas in quotes (for exp, comments + requests)
+                for (int i = 0; i < parts.length; i++) { 
                     parts[i] = parts[i].trim(); // Remove leading and trailing spaces
                     
                     // Remove surrounding quotes if present

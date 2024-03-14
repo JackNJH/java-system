@@ -2,3 +2,4 @@ C1, Jacc, TestRoom
 C2, Pronto, TestRoom2
 C3, Jonas, TestRoom3
 C4, Scott, TestRoom4
+C5, Tom, Bungalow

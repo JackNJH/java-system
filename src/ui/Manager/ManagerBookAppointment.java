@@ -1,13 +1,23 @@
 package ui.Manager;
 
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import javax.swing.JOptionPane;
+import utils.InputValidator;
 
 public class ManagerBookAppointment extends javax.swing.JFrame {
-
-    public ManagerBookAppointment() {
+    
+    private static String loggedInManager;
+    
+    public ManagerBookAppointment(String loggedInManager) {
         initComponents();
+        this.loggedInManager = loggedInManager;
+        insertTechnicianComboBox();
     }
 
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,7 +36,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         goBackBtn = new javax.swing.JButton();
         confirmBtn = new javax.swing.JButton();
         customerRoomLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        technicianSelect = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,8 +100,14 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         customerRoomLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         customerRoomLabel1.setText("Assign to:");
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Automatic" }));
+        technicianSelect.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        technicianSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "On hold" }));
+        technicianSelect.setToolTipText("");
+        technicianSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                technicianSelectActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,7 +149,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                        .addComponent(technicianSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,7 +176,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(customerRoomLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(technicianSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,7 +188,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void customerNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNameFieldActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_customerNameFieldActionPerformed
 
     private void customerRoomFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerRoomFieldActionPerformed
@@ -180,46 +196,256 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_customerRoomFieldActionPerformed
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ManagerHomePage homepageframe = new ManagerHomePage(); // Create an instance of the ManagerHomePage class
+        ManagerHomePage homepageframe = new ManagerHomePage(loggedInManager); // Create an instance of the ManagerHomePage class
         homepageframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        // TODO add your handling code here:
+        String appointmentInfo;
+        
+        String appointmentID = "AP"+getNextAppointmentID();
+        String managerID = getManagerID(loggedInManager);
+        
+        String customerName = customerNameField.getText().trim();
+        String customerRoom = customerRoomField.getText().trim();
+        String customerID = getCustomerID(customerName, customerRoom);
+        
+        String technicianName = technicianSelect.getSelectedItem().toString();
+        String technicianID = null; // Default to null for "On hold" option
+        if (!technicianName.equals("On hold")) {
+            technicianID = getTechnicianID(technicianName);
+        }
+        
+        String request = requestField.getText().trim();
+        String addComments = addCommentsField.getText().trim();
+        
+        // Validation
+        if (customerName.isEmpty() || customerRoom.isEmpty() || request.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Missing Information", JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+        
+        if (!InputValidator.isValidUsername(customerName) || !InputValidator.isValidUsername(customerRoom)){
+            JOptionPane.showMessageDialog(this, "Invalid fields. Special characters deteced or it exceeds 20 characters.", "Invalid Format", JOptionPane.ERROR_MESSAGE);
+            return; // Exit method
+        }
+
+        String appointmentStatus = (technicianID != null) ? "ASSIGNED" : "PENDING ASSIGNMENT";
+        
+        if (addComments.isEmpty()) {
+            addComments = null;
+        }        
+        
+        if (customerID == null) {
+            // Create a new customer ID
+            int nextCustomerID = getNextCustomerID();
+            customerID = "C" + nextCustomerID;
+            addCustomerToFile(customerID, customerName, customerRoom);
+        }
+        
+        if (addComments == null) {
+            appointmentInfo = String.format("%s, %s, %s, %s, \"%s\", %s, %s, NULL, %s",
+                appointmentID, managerID, customerID, technicianID, request, getCurrentDate(), appointmentStatus, addComments);
+        } else {
+            appointmentInfo = String.format("%s, %s, %s, %s, \"%s\", %s, %s, NULL, \"%s\"",
+                appointmentID, managerID, customerID, technicianID, request, getCurrentDate(), appointmentStatus, addComments);
+        }
+        
+        // Write the appointment info
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/appointment.txt", true))) {
+            bw.write(appointmentInfo);
+            bw.newLine();
+            JOptionPane.showMessageDialog(this, "Appointment made successfully", "Booking Success", JOptionPane.INFORMATION_MESSAGE);
+            customerNameField.setText("");
+            customerRoomField.setText("");
+            requestField.setText("");
+            addCommentsField.setText("");
+            technicianSelect.setSelectedItem("On hold");
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
     }//GEN-LAST:event_confirmBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private int getNextAppointmentID() {
+        int maxID = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader("data/appointment.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length > 0) {
+                    String appointmentID = parts[0].trim();
+                    int idNumber = extractAppointmentIDNumber(appointmentID);
+                    if (idNumber > maxID) {
+                        maxID = idNumber;
+                    }
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManagerBookAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManagerBookAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManagerBookAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManagerBookAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
         }
-        //</editor-fold>
 
-        /* Create and display the form */
+        return maxID + 1; // Increment the largest ID to get the next ID
+    }
+
+    private int extractAppointmentIDNumber(String appointmentID) {
+        String idStr = appointmentID.substring(2); // Remove "AP" prefix
+        return Integer.parseInt(idStr);
+    }
+
+    private static String getManagerID(String loggedInManager) {
+        String managerID = null;
+
+        try (BufferedReader br = new BufferedReader(new FileReader("data/manager.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length > 1) {
+                    String managerUsername = parts[1].trim(); 
+                    if (managerUsername.equalsIgnoreCase(loggedInManager)) {
+                        managerID = parts[0].trim();
+                        break; // Stop reading after finding the match
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
+        return managerID;
+    }
+    
+    private String getCustomerID(String customerName, String customerRoom) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data/customer.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length > 2) {
+                    String name = parts[1].trim();
+                    String room = parts[2].trim();
+                    if (name.equalsIgnoreCase(customerName) && room.equalsIgnoreCase(customerRoom)) {
+                        return parts[0].trim(); // Return customer ID
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+        return null; 
+    }
+    
+    private int getNextCustomerID() {
+        int maxID = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader("data/customer.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length > 0) {
+                    int idNumber = extractCustomerIDNumber(parts[0].trim());
+                    if (idNumber > maxID) {
+                        maxID = idNumber;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
+        return maxID + 1; // Increment the largest ID to get the next ID
+    }
+    
+    private int extractCustomerIDNumber(String customerID) {
+        String idStr = customerID.substring(1); // Remove "C" prefix
+        return Integer.parseInt(idStr);
+    }
+    
+    private void addCustomerToFile(String customerID, String customerName, String customerRoom) {
+        String customerInfo = String.format("%s, %s, %s", customerID, customerName, customerRoom);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/customer.txt", true))) {
+            bw.write(customerInfo);
+            bw.newLine();
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+    
+    private String getTechnicianID(String selectedTechnician) {
+        String[] parts = selectedTechnician.split(" - ");
+        String technicianName = parts[0].trim();
+        String technicianSpecialty = parts[1].trim();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("data/technician.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] lineParts = line.split(", ");
+                if (lineParts.length >= 2) {
+                    String techID = lineParts[0].trim();
+                    String techName = lineParts[1].trim();
+                    String techSpecialty = lineParts[2].trim();
+                    if (techName.equalsIgnoreCase(technicianName) && techSpecialty.equalsIgnoreCase(technicianSpecialty)) {
+                        return techID;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+        return null; // Technician not found
+    }
+    
+    private static String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM uuuu");
+        String formattedDate = currentDate.format(formatter);
+
+        return formattedDate;
+    }
+    
+    private void technicianSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_technicianSelectActionPerformed
+
+    }//GEN-LAST:event_technicianSelectActionPerformed
+
+    private void insertTechnicianComboBox(){
+        ArrayList<String> technicianInfoList = readTechnicianFile("data/technician.txt");
+        if (technicianInfoList != null) {
+            for (String info : technicianInfoList) {
+                technicianSelect.addItem(info);
+            }
+        }
+    }
+    
+    private ArrayList<String> readTechnicianFile(String filename) {
+        ArrayList<String> technicianInfoList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null){
+                String[] parts = line.split(", ");
+                if (parts.length >= 3) {
+                    String technicianName = parts[1];
+                    String technicianSpecialty = parts[2];
+                    String technicianInfo = technicianName + " - " + technicianSpecialty;
+                    technicianInfoList.add(technicianInfo);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: "+ e.getMessage());
+            return null;
+        }
+        return technicianInfoList;
+    }
+    
+    public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManagerBookAppointment().setVisible(true);
+                if (loggedInManager != null && !loggedInManager.isEmpty()) {
+                    new ManagerBookAppointment(loggedInManager).setVisible(true);
+                } else {
+                    System.out.println("No manager logged in.");
+                }
             }
         });
     }
@@ -235,10 +461,10 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
     private javax.swing.JLabel customerRoomLabel;
     private javax.swing.JLabel customerRoomLabel1;
     private javax.swing.JButton goBackBtn;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea requestField;
     private javax.swing.JLabel requestLabel;
+    private javax.swing.JComboBox<String> technicianSelect;
     // End of variables declaration//GEN-END:variables
 }

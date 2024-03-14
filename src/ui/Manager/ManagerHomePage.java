@@ -7,11 +7,15 @@ import utils.CSVParser;
 
 
 public class ManagerHomePage extends javax.swing.JFrame {
-    public ManagerHomePage() {
+    
+    private static String loggedInManager;
+    
+    public ManagerHomePage(String loggedInManager) {
         displayAppointments();
         displayUserData();
         displayLoginData();
         initComponents();
+        this.loggedInManager = loggedInManager;
     }
 
     @SuppressWarnings("unchecked")
@@ -172,7 +176,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bookAppointmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAppointmentsBtnActionPerformed
-        ManagerBookAppointment bookAppointmentFrame = new ManagerBookAppointment(); // Create an instance of the ManagerBookAppointment class
+        ManagerBookAppointment bookAppointmentFrame = new ManagerBookAppointment(loggedInManager); // Create an instance of the ManagerBookAppointment class
         bookAppointmentFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bookAppointmentsBtnActionPerformed
@@ -185,6 +189,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         try {
+            loggedInManager = null;
             Login loginFrame = new Login(); // Create an instance of the Login class
             loginFrame.setVisible(true);
             this.dispose();
@@ -269,10 +274,16 @@ public class ManagerHomePage extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManagerHomePage().setVisible(true);
+                if (loggedInManager != null && !loggedInManager.isEmpty()) {
+                    new ManagerHomePage(loggedInManager).setVisible(true);
+                } else {
+                    System.out.println("No manager logged in.");
+                }
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel appointmentsLabel;

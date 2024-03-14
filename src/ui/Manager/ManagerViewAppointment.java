@@ -3,9 +3,11 @@ package ui.Manager;
 
 public class ManagerViewAppointment extends javax.swing.JFrame {
 
+    private String loggedInManager;
 
     public ManagerViewAppointment() {
         initComponents();
+        this.loggedInManager = loggedInManager;
     }
 
     @SuppressWarnings("unchecked")
@@ -75,7 +77,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ManagerHomePage homepageframe = new ManagerHomePage(); // Create an instance of the ManagerHomePage class
+        ManagerHomePage homepageframe = new ManagerHomePage(loggedInManager); // Create an instance of the ManagerHomePage class
         homepageframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_goBackBtnActionPerformed
