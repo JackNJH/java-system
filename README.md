@@ -18,7 +18,7 @@ This Java program implements a Home Appliances Service Centre system to manage e
        - etc...
 
    - **utils folder**
-     - **CSVParser.java**: Utility class to parse CSV files.
+     - **CSVParser.java**: Utility class to parse data files.
      - **InputValidator.java**: Utility class for input validation.
      - etc...
 
