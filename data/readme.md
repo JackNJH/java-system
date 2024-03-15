@@ -24,7 +24,7 @@ The structure of each `.txt` file used in the system:
 
 ## receipt.txt
 - Contains post-appointment information.
-    - `{customerFeedback, paymentStatus, paymentDate, paymentAmount, technicianFeedback}`
+    - `{receiptID, appointmentID, customerFeedback, paymentStatus, paymentDate, paymentAmount, technicianFeedback}`
 
 ## login_records.txt
 - Contains login records.
