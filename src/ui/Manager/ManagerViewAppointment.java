@@ -3,9 +3,9 @@ package ui.Manager;
 
 public class ManagerViewAppointment extends javax.swing.JFrame {
 
-    private String loggedInManager;
+    private static String loggedInManager;
 
-    public ManagerViewAppointment() {
+    public ManagerViewAppointment(String loggedInManager) {
         initComponents();
         this.loggedInManager = loggedInManager;
     }
@@ -32,7 +32,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Appointment ID", "Customer ", "Room", "Appointed To", "Appointed By", "Appointed Date", "Request", "Add. Comments", "Status"
+                "ID", "Customer ", "Room", "Appointed To", "Appointed By", "Appointed Date", "Request", "Add. Comments", "Status"
             }
         ));
         jScrollPane1.setViewportView(viewDetailsTable);
@@ -99,12 +99,14 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ManagerViewAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManagerViewAppointment().setVisible(true);
+                if (loggedInManager != null && !loggedInManager.isEmpty()) {
+                    new ManagerViewAppointment(loggedInManager).setVisible(true);
+                } else {
+                    System.out.println("No manager logged in.");
+                }
             }
         });
     }

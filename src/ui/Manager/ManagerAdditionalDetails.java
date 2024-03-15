@@ -10,9 +10,11 @@ package ui.Manager;
  */
 public class ManagerAdditionalDetails extends javax.swing.JFrame {
 
-
+    private static String loggedInManager;
+    
     public ManagerAdditionalDetails() {
         initComponents();
+        this.loggedInManager = loggedInManager;
     }
 
 
@@ -216,7 +218,7 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ManagerViewAppointment viewAppointmentFrame = new ManagerViewAppointment(); // Create an instance of the ManagerHomePage class
+        ManagerViewAppointment viewAppointmentFrame = new ManagerViewAppointment(loggedInManager); // Create an instance of the ManagerHomePage class
         viewAppointmentFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_goBackBtnActionPerformed

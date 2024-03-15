@@ -206,6 +206,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         
         String appointmentID = "AP"+getNextAppointmentID();
         String managerID = getManagerID(loggedInManager);
+        String receiptID = "R"+getNextReceiptID();
         
         String customerName = customerNameField.getText().trim();
         String customerRoom = customerRoomField.getText().trim();
@@ -252,6 +253,9 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                 appointmentID, managerID, customerID, technicianID, request, getCurrentDate(), appointmentStatus, addComments);
         }
         
+        String receiptInfo = String.format("%s, %s, NULL, NOT COMPLETE, NULL, NULL, NULL",
+        receiptID, appointmentID);
+        
         // Write the appointment info
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/appointment.txt", true))) {
             bw.write(appointmentInfo);
@@ -265,20 +269,30 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
         }
+        
+        try (BufferedWriter bwReceipt = new BufferedWriter(new FileWriter("data/receipt.txt", true))) {
+            bwReceipt.write(receiptInfo);
+            bwReceipt.newLine(); 
+        } catch (IOException e) {
+            System.err.println("Error writing receipt info to file: " + e.getMessage());
+        }
+        
     }//GEN-LAST:event_confirmBtnActionPerformed
 
-    private int getNextAppointmentID() {
+    private int getNextIDFromFile(String filename, String idPrefix) {
         int maxID = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader("data/appointment.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(", ");
                 if (parts.length > 0) {
-                    String appointmentID = parts[0].trim();
-                    int idNumber = extractAppointmentIDNumber(appointmentID);
-                    if (idNumber > maxID) {
-                        maxID = idNumber;
+                    String id = parts[0].trim();
+                    if (id.startsWith(idPrefix)) {
+                        int idNumber = Integer.parseInt(id.substring(idPrefix.length()));
+                        if (idNumber > maxID) {
+                            maxID = idNumber;
+                        }
                     }
                 }
             }
@@ -286,12 +300,15 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
             System.err.println("Error reading file: " + e.getMessage());
         }
 
-        return maxID + 1; // Increment the largest ID to get the next ID
+        return maxID + 1; 
     }
 
-    private int extractAppointmentIDNumber(String appointmentID) {
-        String idStr = appointmentID.substring(2); // Remove "AP" prefix
-        return Integer.parseInt(idStr);
+    private int getNextReceiptID() {
+        return getNextIDFromFile("data/receipt.txt", "R");
+    }
+
+    private int getNextAppointmentID() {
+        return getNextIDFromFile("data/appointment.txt", "AP");
     }
 
     private static String getManagerID(String loggedInManager) {
@@ -357,7 +374,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
     }
     
     private int extractCustomerIDNumber(String customerID) {
-        String idStr = customerID.substring(1); // Remove "C" prefix
+        String idStr = customerID.substring(1); // Remove "C" / "R" prefix
         return Integer.parseInt(idStr);
     }
     
@@ -404,6 +421,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         return formattedDate;
     }
     
+
     private void technicianSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_technicianSelectActionPerformed
 
     }//GEN-LAST:event_technicianSelectActionPerformed

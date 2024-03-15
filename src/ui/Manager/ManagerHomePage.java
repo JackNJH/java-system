@@ -182,7 +182,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_bookAppointmentsBtnActionPerformed
 
     private void viewAppointmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAppointmentsBtnActionPerformed
-        ManagerViewAppointment viewAppointmentFrame = new ManagerViewAppointment(); // Create an instance of the ManagerViewAppointment class
+        ManagerViewAppointment viewAppointmentFrame = new ManagerViewAppointment(loggedInManager); // Create an instance of the ManagerViewAppointment class
         viewAppointmentFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_viewAppointmentsBtnActionPerformed
