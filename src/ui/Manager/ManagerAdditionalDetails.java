@@ -1,7 +1,7 @@
 package ui.Manager;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import javax.swing.JOptionPane;
 import utils.CSVParser;
 import utils.TechnicianComboBox;
@@ -9,6 +9,8 @@ import utils.TechnicianComboBox;
 
 public class ManagerAdditionalDetails extends javax.swing.JFrame {
 
+    private String[][] receiptData;
+    private String[][] appointmentData;
     private static String loggedInManager;
     
     public ManagerAdditionalDetails(String appointmentID, String customerName, String loggedInManager, String selectedTechnician) {
@@ -245,26 +247,31 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         if (receiptData != null) {
             for (String[] receipt : receiptData) {
                 if (receipt[1].equals(appointmentIDValue.getText())) {
-                    if (updatedCFeedback.isEmpty()) {
-                        receipt[2] = "NULL"; // Save as "NULL" if updatedCFeedback is empty
-                    } else {
-                        receipt[2] = "\"" + updatedCFeedback + "\""; // Update the cFeedback value with quotes
+                    String originalCFeedback = receipt[2]; // Store the original cFeedback value
+                    if (!updatedCFeedback.equals(originalCFeedback)) {
+                        if (updatedCFeedback.isEmpty()) {
+                            receipt[2] = "NULL"; 
+                        } else {
+                            receipt[2] = "\"" + updatedCFeedback + "\""; // Update the cFeedback value with quotes
+                        }
                     }
                     break; 
                 }
             }
         }
-
-        saveDataToFile("data/receipt.txt");
         
+        saveDataToFile("data/receipt.txt");
+        updateAppointmentFile("data/appointment.txt");
+        
+        JOptionPane.showMessageDialog(this, "Changes saved successfully!", "Saved", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveChangesBtnActionPerformed
 
     private void saveDataToFile(String filePath) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (String[] receipt : receiptData) {
-                // Add quotes only for technician's feedback field (index 6) since CSVParser removed quotations. 
+                // Add quotes for technician's + customer's feedback field (index 6 + 2) since CSVParser removed quotations. 
                 for (int i = 0; i < receipt.length; i++) {
-                    if (i == 6 && !receipt[i].equals("NULL")) {
+                    if ((i == 2 || i == 6) && !receipt[i].equals("NULL")) {
                         bw.write("\"" + receipt[i] + "\"");
                     } else {
                         bw.write(receipt[i]);
@@ -275,14 +282,68 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                 }
                 bw.newLine();
             }
-            // Show alert upon successful save
-            JOptionPane.showMessageDialog(this, "Changes saved successfully!", "Saved",JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    private String[][] receiptData;
+    private void updateAppointmentFile(String filePath) {
+
+        List<String> updatedLines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                String appointmentID = parts[0];
+
+                if (appointmentID.equals(appointmentIDValue.getText())) {
+                    String technicianName = technicianNameValue.getSelectedItem().toString().split(" - ")[0];
+                    String technicianID = getTechnicianIDFromName(technicianName);
+                    parts[3] = technicianID ;
+
+                    if (technicianNameValue.getSelectedItem().equals("On hold")) {
+                        parts[6] = "PENDING ASSIGNMENT";
+                        parts[3] = "NULL";
+                    } else {
+                        parts[6] = "ASSIGNED";
+                    }
+
+                    // Reconstruct the line with updated values
+                    line = String.join(", ", parts);
+                }
+
+                updatedLines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (String updatedLine : updatedLines) {
+                bw.write(updatedLine);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getTechnicianIDFromName(String technicianName) {
+        String technicianID = "NULL"; 
+        try {
+            String[][] technicianData = CSVParser.parseCSV("data/technician.txt");
+            for (String[] technician : technicianData) {
+                if (technician.length >= 2 && technician[1].equalsIgnoreCase(technicianName)) {
+                    technicianID = technician[0]; 
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return technicianID;
+    }
     
     private void loadReceiptData(String filePath) {
         try {
@@ -299,8 +360,24 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                     completionDateValue.setText(receipt[4]); // Display completion date
                     paymentStatusValue.setText(receipt[3]); // Display payment status
                     paymentAmountValue.setText(receipt[5]); // Display payment amount
-                    cFeedbackValue.setText(receipt[2]); // Display customer feedback
-                    tFeedbackValue.setText(receipt[6]); // Display technician feedback
+
+                    if (receipt[3].equals("COMPLETED")) {
+                        technicianNameValue.setEnabled(false);
+                    } else {
+                        technicianNameValue.setEnabled(true);
+                    }
+                    
+                    if (receipt[2].equals("NULL")) {
+                        cFeedbackValue.setText(""); // Set text to empty if customer feedback is NULL
+                    } else {
+                        cFeedbackValue.setText(receipt[2]);
+                    }
+
+                    if (receipt[6].equals("NULL")) {
+                        tFeedbackValue.setText(""); // Set text to empty if technician feedback is NULL
+                    } else {
+                        tFeedbackValue.setText(receipt[6]);
+                    }
                     break;
                 }
             }

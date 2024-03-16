@@ -183,12 +183,11 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                if (loggedInManager != null && !loggedInManager.isEmpty()) {
-//                    new ManagerViewAppointment(loggedInManager).setVisible(true);
-//                } else {
-//                    System.out.println("No manager logged in.");
-//                }
-                new ManagerViewAppointment(loggedInManager).setVisible(true);
+                if (loggedInManager != null && !loggedInManager.isEmpty()) {
+                    new ManagerViewAppointment(loggedInManager).setVisible(true);
+                } else {
+                    System.out.println("No manager logged in.");
+                }
             }
         });
     }
