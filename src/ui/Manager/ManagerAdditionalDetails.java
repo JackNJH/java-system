@@ -12,8 +12,13 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
 
     private static String loggedInManager;
     
-    public ManagerAdditionalDetails() {
+    public ManagerAdditionalDetails(String appointmentID, String customerName) {
         initComponents();
+        
+        appointmentIDValue.setText(appointmentID);
+        customerNameValue.setText(customerName);
+        
+        
         this.loggedInManager = loggedInManager;
     }
 
@@ -246,7 +251,11 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManagerAdditionalDetails().setVisible(true);
+                String appointmentID = "id";
+                String customerName = "customer";
+                
+                
+                new ManagerAdditionalDetails(appointmentID, customerName).setVisible(true);
             }
         });
     }
