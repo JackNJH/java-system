@@ -46,73 +46,59 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="appointmentIDLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerNameLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="technicianNameLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="completionDateLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="paymentStatusLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="paymentAmountLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="customerNameValue" alignment="1" min="-2" pref="478" max="-2" attributes="0"/>
+                      <Component id="appointmentIDValue" alignment="1" min="-2" pref="475" max="-2" attributes="0"/>
+                      <Component id="technicianNameValue" alignment="0" min="-2" pref="435" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="completionDateValue" min="-2" pref="463" max="-2" attributes="0"/>
+                  <Component id="paymentStatusValue" min="-2" pref="463" max="-2" attributes="0"/>
+                  <Component id="paymentAmountValue" alignment="0" min="-2" pref="463" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="tFeedbackLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="467" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="cFeedbackLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="467" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="76" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                              <Component id="additionalDetailsLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="completionDateLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="completionDateValue" min="-2" pref="185" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                          <Component id="customerNameLabel" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="customerNameValue" min="-2" pref="185" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="appointmentIDLabel" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="appointmentIDValue" min="-2" pref="40" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="paymentStatusLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="paymentStatusValue" min="-2" pref="185" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="paymentAmountLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="paymentAmountValue" min="-2" pref="185" max="-2" attributes="0"/>
-                                  </Group>
+                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="goBackBtn" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="saveChangesBtn" min="-2" pref="144" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="tFeedbackLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane2" min="-2" pref="467" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="goBackBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="saveChangesBtn" min="-2" pref="144" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
+                      <Component id="additionalDetailsLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -121,7 +107,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Component id="additionalDetailsLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="appointmentIDValue" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="appointmentIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -133,20 +119,25 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="technicianNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="technicianNameValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="completionDateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="completionDateValue" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="paymentStatusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="paymentStatusValue" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="paymentAmountLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="paymentAmountLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="paymentAmountValue" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="cFeedbackLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="108" max="-2" attributes="0"/>
@@ -156,12 +147,12 @@
                   <Component id="tFeedbackLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="goBackBtn" alignment="1" min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="saveChangesBtn" alignment="1" min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="saveChangesBtn" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="goBackBtn" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -174,6 +165,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Save Changes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveChangesBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="goBackBtn">
       <Properties>
@@ -323,8 +317,34 @@
             </Property>
             <Property name="rows" type="int" value="4"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tFeedbackValue.setEditable(false);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="technicianNameLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="20" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Technician:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="technicianNameValue">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="20" style="0"/>
+        </Property>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="On hold"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
   </SubComponents>
 </Form>

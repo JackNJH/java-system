@@ -1,27 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui.Manager;
 
-/**
- *
- * @author User
- */
+import java.io.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import utils.CSVParser;
+import utils.TechnicianComboBox;
+
+
 public class ManagerAdditionalDetails extends javax.swing.JFrame {
 
     private static String loggedInManager;
     
-    public ManagerAdditionalDetails(String appointmentID, String customerName) {
+    public ManagerAdditionalDetails(String appointmentID, String customerName, String loggedInManager, String selectedTechnician) {
         initComponents();
         
         appointmentIDValue.setText(appointmentID);
         customerNameValue.setText(customerName);
         
+        loadReceiptData("data/receipt.txt");
+        displayDetails(appointmentID);
         
         this.loggedInManager = loggedInManager;
+        insertTechnicianComboBox(selectedTechnician);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -48,6 +49,8 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         tFeedbackLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tFeedbackValue = new javax.swing.JTextArea();
+        technicianNameLabel = new javax.swing.JLabel();
+        technicianNameValue = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,6 +69,11 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
 
         saveChangesBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         saveChangesBtn.setText("Save Changes");
+        saveChangesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveChangesBtnActionPerformed(evt);
+            }
+        });
 
         goBackBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         goBackBtn.setText("Go Back");
@@ -122,69 +130,67 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         tFeedbackValue.setColumns(20);
         tFeedbackValue.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tFeedbackValue.setRows(4);
+        tFeedbackValue.setEditable(false);
         jScrollPane2.setViewportView(tFeedbackValue);
+
+        technicianNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        technicianNameLabel.setText("Technician:");
+
+        technicianNameValue.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        technicianNameValue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "On hold" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(appointmentIDLabel)
+                    .addComponent(customerNameLabel)
+                    .addComponent(technicianNameLabel)
+                    .addComponent(completionDateLabel)
+                    .addComponent(paymentStatusLabel)
+                    .addComponent(paymentAmountLabel))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(customerNameValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(appointmentIDValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(technicianNameValue, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(completionDateValue, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentStatusValue, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentAmountValue, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tFeedbackLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cFeedbackLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 76, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(goBackBtn)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(tFeedbackLabel)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(230, 230, 230)
-                                .addComponent(additionalDetailsLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(completionDateLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(completionDateValue, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(54, 54, 54)
-                                            .addComponent(customerNameLabel)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(customerNameValue, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(appointmentIDLabel)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(appointmentIDValue, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(paymentStatusLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(paymentStatusValue, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(paymentAmountLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(paymentAmountValue, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(goBackBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addGap(230, 230, 230)
+                        .addComponent(additionalDetailsLabel)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(additionalDetailsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(appointmentIDValue)
                     .addComponent(appointmentIDLabel))
@@ -194,17 +200,21 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                     .addComponent(customerNameValue))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(technicianNameLabel)
+                    .addComponent(technicianNameValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(completionDateLabel)
                     .addComponent(completionDateValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(paymentStatusLabel)
                     .addComponent(paymentStatusValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(paymentAmountLabel)
                     .addComponent(paymentAmountValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cFeedbackLabel)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,11 +222,11 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tFeedbackLabel)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(goBackBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveChangesBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveChangesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -228,37 +238,106 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_goBackBtnActionPerformed
 
+    private void saveChangesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesBtnActionPerformed
 
-    public static void main(String args[]) {
+        String updatedCFeedback = cFeedbackValue.getText();
+
+        if (receiptData != null) {
+            for (String[] receipt : receiptData) {
+                if (receipt[1].equals(appointmentIDValue.getText())) {
+                    if (updatedCFeedback.isEmpty()) {
+                        receipt[2] = "NULL"; // Save as "NULL" if updatedCFeedback is empty
+                    } else {
+                        receipt[2] = "\"" + updatedCFeedback + "\""; // Update the cFeedback value with quotes
+                    }
+                    break; 
+                }
+            }
+        }
+
+        saveDataToFile("data/receipt.txt");
+        
+    }//GEN-LAST:event_saveChangesBtnActionPerformed
+
+    private void saveDataToFile(String filePath) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (String[] receipt : receiptData) {
+                // Add quotes only for technician's feedback field (index 6) since CSVParser removed quotations. 
+                for (int i = 0; i < receipt.length; i++) {
+                    if (i == 6 && !receipt[i].equals("NULL")) {
+                        bw.write("\"" + receipt[i] + "\"");
+                    } else {
+                        bw.write(receipt[i]);
+                    }
+                    if (i < receipt.length - 1) {
+                        bw.write(", ");
+                    }
+                }
+                bw.newLine();
+            }
+            // Show alert upon successful save
+            JOptionPane.showMessageDialog(this, "Changes saved successfully!", "Saved",JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private String[][] receiptData;
+    
+    private void loadReceiptData(String filePath) {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+            receiptData = CSVParser.parseCSV(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+    private void displayDetails(String appointmentID) {
+        if (receiptData != null) {
+            for (String[] receipt : receiptData) {
+                if (receipt[1].equals(appointmentID)) {
+                    completionDateValue.setText(receipt[4]); // Display completion date
+                    paymentStatusValue.setText(receipt[3]); // Display payment status
+                    paymentAmountValue.setText(receipt[5]); // Display payment amount
+                    cFeedbackValue.setText(receipt[2]); // Display customer feedback
+                    tFeedbackValue.setText(receipt[6]); // Display technician feedback
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManagerAdditionalDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManagerAdditionalDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManagerAdditionalDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManagerAdditionalDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }
+    
+    private void insertTechnicianComboBox(String selectedTechnician) {
+        ArrayList<String> technicianInfoList = TechnicianComboBox.readTechnicianFile("data/technician.txt");
+        if (technicianInfoList != null) {
+            for (String info : technicianInfoList) {
+                String technicianName = info.split(" - ")[0];
+                technicianNameValue.addItem(info);
+                if (technicianName.equals(selectedTechnician)) {
+                    technicianNameValue.setSelectedItem(info); // Select the appropriate technician
+                }
+            }
+            
+        }
+    }
 
-        /* Create and display the form */
+
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                String appointmentID = "id";
-                String customerName = "customer";
+                String appointmentID = "ID";
+                String customerName = "Customer";
+                String selectedTechnician = "Technician";
                 
-                
-                new ManagerAdditionalDetails(appointmentID, customerName).setVisible(true);
+                if (loggedInManager != null && !loggedInManager.isEmpty()) {
+                    new ManagerAdditionalDetails(appointmentID, customerName, loggedInManager, selectedTechnician).setVisible(true);
+                } else {
+                    System.out.println("No manager logged in.");
+                }
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel additionalDetailsLabel;
@@ -282,5 +361,7 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
     private javax.swing.JButton saveChangesBtn;
     private javax.swing.JLabel tFeedbackLabel;
     private javax.swing.JTextArea tFeedbackValue;
+    private javax.swing.JLabel technicianNameLabel;
+    private javax.swing.JComboBox<String> technicianNameValue;
     // End of variables declaration//GEN-END:variables
 }

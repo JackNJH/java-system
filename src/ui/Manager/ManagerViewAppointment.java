@@ -24,6 +24,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         viewDetailsTable = new javax.swing.JTable();
         goBackBtn = new javax.swing.JButton();
+        tipsLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,11 +42,12 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int selectedRow = viewDetailsTable.getSelectedRow();
                 if (selectedRow != -1) { // Ensure a row is selected
-                    String appointmentID = appointmentData[selectedRow][0]; // Assuming appointment ID is at index 0
-                    String customerName = appointmentData[selectedRow][1]; // Assuming customer name is at index 1
+                    String appointmentID = appointmentData[selectedRow][0];
+                    String customerName = appointmentData[selectedRow][1];
+                    String selectedTechnician = appointmentData[selectedRow][3];
 
                     // Create an instance of ManagerAdditionalDetails and pass the appointmentID and customerName
-                    ManagerAdditionalDetails additionalDetailsFrame = new ManagerAdditionalDetails(appointmentID, customerName);
+                    ManagerAdditionalDetails additionalDetailsFrame = new ManagerAdditionalDetails(appointmentID, customerName, loggedInManager, selectedTechnician);
                     additionalDetailsFrame.setVisible(true);
                     ManagerViewAppointment.this.dispose();
                 }
@@ -70,27 +72,33 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
             }
         });
 
+        tipsLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tipsLabel.setText("(Click on row to view/edit additional details)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(goBackBtn)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(400, 400, 400)
-                        .addComponent(viewDetailsLabel)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goBackBtn))
                 .addContainerGap(38, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewDetailsLabel)
+                .addGap(18, 18, 18)
+                .addComponent(tipsLabel)
+                .addGap(150, 150, 150))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(viewDetailsLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewDetailsLabel)
+                    .addComponent(tipsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -171,26 +179,8 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         }
     }
 
-    // Other methods and components of your class
 
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManagerViewAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManagerViewAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManagerViewAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManagerViewAppointment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                if (loggedInManager != null && !loggedInManager.isEmpty()) {
@@ -198,7 +188,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
 //                } else {
 //                    System.out.println("No manager logged in.");
 //                }
-            new ManagerViewAppointment(loggedInManager).setVisible(true);
+                new ManagerViewAppointment(loggedInManager).setVisible(true);
             }
         });
     }
@@ -206,6 +196,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton goBackBtn;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel tipsLabel;
     private javax.swing.JLabel viewDetailsLabel;
     private javax.swing.JTable viewDetailsTable;
     // End of variables declaration//GEN-END:variables

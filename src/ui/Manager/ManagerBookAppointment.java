@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.JOptionPane;
 import utils.InputValidator;
+import utils.TechnicianComboBox;
 
 public class ManagerBookAppointment extends javax.swing.JFrame {
     
@@ -426,34 +427,16 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
 
     }//GEN-LAST:event_technicianSelectActionPerformed
 
-    private void insertTechnicianComboBox(){
-        ArrayList<String> technicianInfoList = readTechnicianFile("data/technician.txt");
+    private void insertTechnicianComboBox() {
+        ArrayList<String> technicianInfoList = TechnicianComboBox.readTechnicianFile("data/technician.txt");
         if (technicianInfoList != null) {
             for (String info : technicianInfoList) {
                 technicianSelect.addItem(info);
             }
         }
     }
+
     
-    private ArrayList<String> readTechnicianFile(String filename) {
-        ArrayList<String> technicianInfoList = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = br.readLine()) != null){
-                String[] parts = line.split(", ");
-                if (parts.length >= 3) {
-                    String technicianName = parts[1];
-                    String technicianSpecialty = parts[2];
-                    String technicianInfo = technicianName + " - " + technicianSpecialty;
-                    technicianInfoList.add(technicianInfo);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading file: "+ e.getMessage());
-            return null;
-        }
-        return technicianInfoList;
-    }
     
     public static void main(String args[]) {
 
