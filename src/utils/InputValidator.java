@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class InputValidator {
     
-    private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[^a-zA-Z0-9 ]");
+    private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[^a-zA-Z0-9 ]"); 
     
     private InputValidator() {
         

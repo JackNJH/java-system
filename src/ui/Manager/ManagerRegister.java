@@ -12,15 +12,16 @@ public class ManagerRegister extends javax.swing.JFrame {
     
     private BufferedReader br;
     private BufferedWriter bw;
-    private int lastUserID;
+    
+    // Initialize variables for getLastIDs
+    private int lastUserID; 
     private int lastManagerID;
     private int lastTechnicianID;
     
     
     public ManagerRegister(String loggedInManager) throws IOException {
         initComponents();
-        getLastIDs();
-        
+        getLastIDs(); // Get largest ID from user, manager, technician
         this.loggedInManager = loggedInManager;
     }
 
@@ -174,7 +175,9 @@ public class ManagerRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_cpasswordFieldActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        String username = usernameField.getText().trim();
+        
+        // Reads input for following fields and ensures data consistency with trim
+        String username = usernameField.getText().trim(); 
         String password = passwordField.getText().trim();
         String cpassword = cpasswordField.getText().trim();
         String userRole = userroleField.getSelectedItem().toString();
@@ -203,6 +206,7 @@ public class ManagerRegister extends javax.swing.JFrame {
             return; // Exit method
         }
         
+        // Check if username already exists
         try {
             br = new BufferedReader(new FileReader("data/user.txt"));
             String line;
@@ -221,6 +225,7 @@ public class ManagerRegister extends javax.swing.JFrame {
                 return; // Exit method
             }
 
+            // Insert into user.txt
             bw = new BufferedWriter(new FileWriter("data/user.txt", true));
             bw.write("U"+lastUserID+", "+username+", "+password+", "+userRole);
             bw.newLine();
@@ -238,7 +243,6 @@ public class ManagerRegister extends javax.swing.JFrame {
             }
             
             JOptionPane.showMessageDialog(this, "User registered successfully", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
-            openLoginPage(); //Open login page upon successful registration
             
         } catch (IOException e) {
             System.err.println("Error writing to file or reading file: " + e.getMessage());
@@ -257,23 +261,23 @@ public class ManagerRegister extends javax.swing.JFrame {
         //Last user ID
         br = new BufferedReader(new FileReader("data/user.txt"));
         String line;
-        while ((line = br.readLine()) != null) {
+        while ((line = br.readLine()) != null) { // Reads all line till null
             String[] parts = line.split(", ");
             if (parts.length > 0) {
-                String userIdStr = parts[0].substring(1);
-                int userId = Integer.parseInt(userIdStr);
-                if (userId > lastUserID) {
-                    lastUserID = userId;
+                String userIdStr = parts[0].substring(1); // Gets user ID from first index and removes the prefix with "U" substring 1
+                int userId = Integer.parseInt(userIdStr); // Converts string to integer for comparing values
+                if (userId > lastUserID) { // Gets biggest user ID value
+                    lastUserID = userId; 
                 }
             }
         }
         br.close();
-        lastUserID++;
+        lastUserID++; // Prepare for the next user registration
         
         //Last manager ID
         br = new BufferedReader(new FileReader("data/manager.txt"));
         while ((line = br.readLine()) != null) {
-            String[] parts = line.split(", ");
+            String[] parts = line.split(", "); 
             if (parts.length > 0) {
                 String managerIdStr = parts[0].substring(1);
                 int managerId = Integer.parseInt(managerIdStr);
@@ -311,17 +315,6 @@ public class ManagerRegister extends javax.swing.JFrame {
         managerHP.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
-
-    private void openLoginPage() {
-    try {
-        Login loginFrame = new Login(); // Create an instance of the Login class
-        loginFrame.setVisible(true);
-        this.dispose();
-    } catch (IOException e) {
-        System.err.println("Error opening Login page: " + e.getMessage());
-    }
-}
-
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

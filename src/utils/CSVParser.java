@@ -7,7 +7,7 @@ public class CSVParser {
     public static String[][] parseCSV(String filePath) throws IOException {
         List<String[]> dataList = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) { //br automatically closed with try-with-resources statement
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); //ignore commas in quotes (for exp, comments + requests)
@@ -19,10 +19,10 @@ public class CSVParser {
                         parts[i] = parts[i].substring(1, parts[i].length() - 1);
                     }
                 }
-                dataList.add(parts);
+                dataList.add(parts); 
             }
         }
 
-        return dataList.toArray(new String[0][]);
+        return dataList.toArray(new String[0][]); //Convert ArrayList to 2D Array
     }
 }

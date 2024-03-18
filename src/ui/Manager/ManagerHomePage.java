@@ -16,11 +16,11 @@ public class ManagerHomePage extends javax.swing.JFrame {
     private String[][] loginrecordData;
     
     public ManagerHomePage(String loggedInManager) {
-        displayAppointments();
-        displayUserData();
-        displayLoginData();
+        displayAppointments(); //Get appointmentData
+        displayUserData(); //Get userData
+        displayLoginData(); //Get loginRecordData
         initComponents();
-        this.loggedInManager = loggedInManager;
+        this.loggedInManager = loggedInManager; //Set loggedInManager variable for this class through the loggedInManager passed to the constructor
     }
 
     @SuppressWarnings("unchecked")
@@ -196,13 +196,13 @@ public class ManagerHomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bookAppointmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAppointmentsBtnActionPerformed
-        ManagerBookAppointment bookAppointmentFrame = new ManagerBookAppointment(loggedInManager); // Create an instance of the ManagerBookAppointment class
+        ManagerBookAppointment bookAppointmentFrame = new ManagerBookAppointment(loggedInManager);
         bookAppointmentFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bookAppointmentsBtnActionPerformed
 
     private void viewAppointmentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAppointmentsBtnActionPerformed
-        ManagerViewAppointment viewAppointmentFrame = new ManagerViewAppointment(loggedInManager); // Create an instance of the ManagerViewAppointment class
+        ManagerViewAppointment viewAppointmentFrame = new ManagerViewAppointment(loggedInManager);
         viewAppointmentFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_viewAppointmentsBtnActionPerformed
@@ -210,7 +210,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         try {
             loggedInManager = null;
-            Login loginFrame = new Login(); // Create an instance of the Login class
+            Login loginFrame = new Login(); 
             loginFrame.setVisible(true);
             this.dispose();
         } catch (IOException e) {
@@ -220,7 +220,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         try {
-            ManagerRegister registerFrame = new ManagerRegister(loggedInManager); // Create an instance of the Register class
+            ManagerRegister registerFrame = new ManagerRegister(loggedInManager); 
             registerFrame.setVisible(true);
             this.dispose();
         } catch (IOException e) {
@@ -232,9 +232,12 @@ public class ManagerHomePage extends javax.swing.JFrame {
     private void displayAppointments() {
         String filePath = "data/appointment.txt";
         try {
+            
+            // Used CSVParser to read values in quotations
             String[][] allData = CSVParser.parseCSV(filePath);
 
-            appointmentData = new String[allData.length][3];
+            appointmentData = new String[allData.length][3]; //Get number of arrays (rows) in appointment.txt and set column to 3
+            
             for (int i = 0; i < allData.length; i++) {
                 String[] row = allData[i];
                 if (row.length >= 7) { 
@@ -254,6 +257,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
     private void displayUserData(){
         String filePath = "data/user.txt";
         try {
+            
             String[][] allData = CSVParser.parseCSV(filePath);
 
             userData = new String[allData.length][2];

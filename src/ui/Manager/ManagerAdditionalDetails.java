@@ -19,11 +19,11 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         appointmentIDValue.setText(appointmentID);
         customerNameValue.setText(customerName);
         
-        loadReceiptData("data/receipt.txt");
+        loadReceiptData(); // Initialize class-level variable receiptData
         displayDetails(appointmentID);
         
         this.loggedInManager = loggedInManager;
-        insertTechnicianComboBox(selectedTechnician);
+        insertTechnicianComboBox(selectedTechnician); // Get technician details from parameters passed
     }
 
     @SuppressWarnings("unchecked")
@@ -213,7 +213,7 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                     .addComponent(paymentStatusLabel)
                     .addComponent(paymentStatusValue))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(paymentAmountLabel)
                     .addComponent(paymentAmountValue))
                 .addGap(18, 18, 18)
@@ -260,21 +260,22 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
             }
         }
         
-        saveDataToFile("data/receipt.txt");
-        updateAppointmentFile("data/appointment.txt");
+        saveDataToFile();
+        updateAppointmentFile();
         
         JOptionPane.showMessageDialog(this, "Changes saved successfully!", "Saved", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveChangesBtnActionPerformed
 
-    private void saveDataToFile(String filePath) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+    private void saveDataToFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/receipt.txt"))) {
             for (String[] receipt : receiptData) {
+                
                 // Add quotes for technician's + customer's feedback field (index 6 + 2) since CSVParser removed quotations. 
                 for (int i = 0; i < receipt.length; i++) {
                     if ((i == 2 || i == 6) && !receipt[i].equals("NULL")) {
                         bw.write("\"" + receipt[i] + "\"");
                     } else {
-                        bw.write(receipt[i]);
+                        bw.write(receipt[i]); // Normal operation if not index 6 / 2
                     }
                     if (i < receipt.length - 1) {
                         bw.write(", ");
@@ -287,11 +288,11 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         }
     }
     
-    private void updateAppointmentFile(String filePath) {
+    private void updateAppointmentFile() {
 
         List<String> updatedLines = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data/appointment.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(", ");
@@ -303,8 +304,8 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                     parts[3] = technicianID ;
 
                     if (technicianNameValue.getSelectedItem().equals("On hold")) {
-                        parts[6] = "PENDING ASSIGNMENT";
-                        parts[3] = "NULL";
+                        parts[6] = "PENDING ASSIGNMENT"; // status
+                        parts[3] = "NULL"; // technicianID
                     } else {
                         parts[6] = "ASSIGNED";
                     }
@@ -313,13 +314,14 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                     line = String.join(", ", parts);
                 }
 
-                updatedLines.add(line);
+                updatedLines.add(line); // New array
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+        // Write updated line to appointment.txt
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/appointment.txt"))) {
             for (String updatedLine : updatedLines) {
                 bw.write(updatedLine);
                 bw.newLine();
@@ -345,9 +347,9 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
         return technicianID;
     }
     
-    private void loadReceiptData(String filePath) {
+    private void loadReceiptData() {
         try {
-            receiptData = CSVParser.parseCSV(filePath);
+            receiptData = CSVParser.parseCSV("data/receipt.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -361,6 +363,8 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                     paymentStatusValue.setText(receipt[3]); // Display payment status
                     paymentAmountValue.setText(receipt[5]); // Display payment amount
 
+                    
+                    // Dont let managers change assignment of technician if the appointment is already completed
                     if (receipt[3].equals("COMPLETED")) {
                         technicianNameValue.setEnabled(false);
                     } else {
@@ -385,16 +389,16 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
     }
     
     private void insertTechnicianComboBox(String selectedTechnician) {
+        // Extract formatted arrays of technicians info into variable
         ArrayList<String> technicianInfoList = TechnicianComboBox.readTechnicianFile("data/technician.txt");
         if (technicianInfoList != null) {
             for (String info : technicianInfoList) {
                 String technicianName = info.split(" - ")[0];
-                technicianNameValue.addItem(info);
-                if (technicianName.equals(selectedTechnician)) {
-                    technicianNameValue.setSelectedItem(info); // Select the appropriate technician
+                technicianNameValue.addItem(info); 
+                if (technicianName.equals(selectedTechnician)) { 
+                    technicianNameValue.setSelectedItem(info); // Set the label based on the parameter passed
                 }
             }
-            
         }
     }
 
@@ -411,6 +415,8 @@ public class ManagerAdditionalDetails extends javax.swing.JFrame {
                 } else {
                     System.out.println("No manager logged in.");
                 }
+                
+                
             }
         });
     }

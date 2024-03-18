@@ -1,17 +1,21 @@
 package ui.Manager;
 
 import java.io.IOException;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import utils.CSVParser;
 
 
 public class ManagerViewAppointment extends javax.swing.JFrame {
 
-    private static String loggedInManager;
+    private static String loggedInManager; 
+    private String[][] appointmentData;
 
     public ManagerViewAppointment(String loggedInManager) {
-        displayAppointments();
-        initComponents();
-        this.loggedInManager = loggedInManager;
+        displayAppointments(); //Get appointmentData
+        initComponents(); 
+        this.loggedInManager = loggedInManager; //Set loggedInManager variable for this class through the loggedInManager passed to the constructor
     }
 
     
@@ -25,6 +29,8 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         viewDetailsTable = new javax.swing.JTable();
         goBackBtn = new javax.swing.JButton();
         tipsLabel = new javax.swing.JLabel();
+        filterField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,22 +81,35 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         tipsLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tipsLabel.setText("(Click on row to view/edit additional details)");
 
+        filterField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        filterField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Filter:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(goBackBtn))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(viewDetailsLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(tipsLabel)
+                        .addGap(176, 176, 176)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterField, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(goBackBtn)))
                 .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(viewDetailsLabel)
-                .addGap(18, 18, 18)
-                .addComponent(tipsLabel)
-                .addGap(150, 150, 150))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,12 +117,14 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewDetailsLabel)
-                    .addComponent(tipsLabel))
+                    .addComponent(tipsLabel)
+                    .addComponent(filterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,7 +136,31 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_goBackBtnActionPerformed
 
-    private String[][] appointmentData;
+    private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterFieldActionPerformed
+        String text = filterField.getText().trim();
+        
+        // Get the table model using 'DefaultTableModel' from viewDetailsTable
+        DefaultTableModel model = (DefaultTableModel) viewDetailsTable.getModel();
+        
+        // Make a sorter instance and set on table using 'setRowSorter'
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        viewDetailsTable.setRowSorter(sorter);
+
+        // Null setRowFilter will display all rows
+        if (text.length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            try {
+                
+                // Regex-based row filter based on the text in filterField
+                RowFilter<DefaultTableModel, Object> rf = RowFilter.regexFilter("(?i)" + text);
+                sorter.setRowFilter(rf);
+            } catch (java.util.regex.PatternSyntaxException e) {
+                System.err.println("Invalid regex pattern: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_filterFieldActionPerformed
+
     
     private void displayAppointments(){
         
@@ -125,6 +170,8 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         String managerFilePath = "data/manager.txt";
         
         try {
+            
+            //Parsing the arrays using CSVParser to return raw data with consideration to quotations 
             String[][] appointmentDataRaw = CSVParser.parseCSV(appointmentFilePath);
             String[][] customerDataRaw = CSVParser.parseCSV(customerFilePath);
             String[][] technicianDataRaw = CSVParser.parseCSV(technicianFilePath);
@@ -193,7 +240,9 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField filterField;
     private javax.swing.JButton goBackBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel tipsLabel;
     private javax.swing.JLabel viewDetailsLabel;

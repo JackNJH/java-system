@@ -10,12 +10,15 @@ import utils.TechnicianComboBox;
 
 public class ManagerBookAppointment extends javax.swing.JFrame {
     
+    // BufferedReader and BufferedWriter not defined as class-level variables
+    // Try-with-resources blocks is used instead for bw and br in each method
+    
     private static String loggedInManager;
     
     public ManagerBookAppointment(String loggedInManager) {
         initComponents();
         this.loggedInManager = loggedInManager;
-        insertTechnicianComboBox();
+        insertTechnicianComboBox(); // Call method to populate technician combo box
     }
 
     
@@ -205,20 +208,25 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         String appointmentInfo;
         
+        // Get next ID for .txt files using methods created
         String appointmentID = "AP"+getNextAppointmentID();
         String managerID = getManagerID(loggedInManager);
         String receiptID = "R"+getNextReceiptID();
         
+        
+        // Extract customer details from user inputs
         String customerName = customerNameField.getText().trim();
         String customerRoom = customerRoomField.getText().trim();
         String customerID = getCustomerID(customerName, customerRoom);
         
+        // Extract technician details from selected combo box
         String technicianName = technicianSelect.getSelectedItem().toString();
         String technicianID = null; // Default to null for "On hold" option
         if (!technicianName.equals("On hold")) {
-            technicianID = getTechnicianID(technicianName);
+            technicianID = getTechnicianID(technicianName); // Method to get technician's ID based on name after reformatting
         }
         
+        // Request and additional comments field
         String request = requestField.getText().trim();
         String addComments = addCommentsField.getText().trim();
         
@@ -230,15 +238,17 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         
         if (!InputValidator.isValidUsername(customerName) || !InputValidator.isValidUsername(customerRoom)){
             JOptionPane.showMessageDialog(this, "Invalid fields. Special characters deteced or it exceeds 20 characters.", "Invalid Format", JOptionPane.ERROR_MESSAGE);
-            return; // Exit method
+            return; 
         }
 
+        // If "On hold" option selected, set status as pending assignment
         String appointmentStatus = (technicianID != null) ? "ASSIGNED" : "PENDING ASSIGNMENT";
         
         if (addComments.isEmpty()) {
             addComments = null;
         }        
         
+        // If no matching customer name + room is found in customer.txt, create new row for new customer
         if (customerID == null) {
             // Create a new customer ID
             int nextCustomerID = getNextCustomerID();
@@ -246,6 +256,8 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
             addCustomerToFile(customerID, customerName, customerRoom);
         }
         
+        // If no additional comments, save addComments data without quotations (addComments = null)
+        // For consistent formatting's sake (?)
         if (addComments == null) {
             appointmentInfo = String.format("%s, %s, %s, %s, \"%s\", %s, %s, NULL, %s",
                 appointmentID, managerID, customerID, technicianID, request, getCurrentDate(), appointmentStatus, addComments);
@@ -254,10 +266,11 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                 appointmentID, managerID, customerID, technicianID, request, getCurrentDate(), appointmentStatus, addComments);
         }
         
+        // Initialize a receipt array, mostly accessible / editable from technician's side
         String receiptInfo = String.format("%s, %s, NULL, NOT COMPLETE, NULL, NULL, NULL",
         receiptID, appointmentID);
         
-        // Write the appointment info
+        // Write into .txt file
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/appointment.txt", true))) {
             bw.write(appointmentInfo);
             bw.newLine();
@@ -290,6 +303,8 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                 if (parts.length > 0) {
                     String id = parts[0].trim();
                     if (id.startsWith(idPrefix)) {
+                        
+                        // Convert the string into int after removing the prefix by using substring
                         int idNumber = Integer.parseInt(id.substring(idPrefix.length()));
                         if (idNumber > maxID) {
                             maxID = idNumber;
@@ -301,13 +316,17 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
             System.err.println("Error reading file: " + e.getMessage());
         }
 
-        return maxID + 1; 
+        return maxID + 1; // Prepare the next ID for selected file
     }
 
     private int getNextReceiptID() {
         return getNextIDFromFile("data/receipt.txt", "R");
     }
 
+    private int getNextCustomerID() {
+        return getNextIDFromFile("data/customer.txt", "C");
+    }
+    
     private int getNextAppointmentID() {
         return getNextIDFromFile("data/appointment.txt", "AP");
     }
@@ -323,7 +342,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                     String managerUsername = parts[1].trim(); 
                     if (managerUsername.equalsIgnoreCase(loggedInManager)) {
                         managerID = parts[0].trim();
-                        break; // Stop reading after finding the match
+                        break; 
                     }
                 }
             }
@@ -343,7 +362,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
                     String name = parts[1].trim();
                     String room = parts[2].trim();
                     if (name.equalsIgnoreCase(customerName) && room.equalsIgnoreCase(customerRoom)) {
-                        return parts[0].trim(); // Return customer ID
+                        return parts[0].trim(); // Return customer ID if customer with entered details
                     }
                 }
             }
@@ -351,42 +370,6 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
             System.err.println("Error reading file: " + e.getMessage());
         }
         return null; 
-    }
-    
-    private int getNextCustomerID() {
-        int maxID = 0;
-
-        try (BufferedReader br = new BufferedReader(new FileReader("data/customer.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(", ");
-                if (parts.length > 0) {
-                    int idNumber = extractCustomerIDNumber(parts[0].trim());
-                    if (idNumber > maxID) {
-                        maxID = idNumber;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-        }
-
-        return maxID + 1; // Increment the largest ID to get the next ID
-    }
-    
-    private int extractCustomerIDNumber(String customerID) {
-        String idStr = customerID.substring(1); // Remove "C" / "R" prefix
-        return Integer.parseInt(idStr);
-    }
-    
-    private void addCustomerToFile(String customerID, String customerName, String customerRoom) {
-        String customerInfo = String.format("%s, %s, %s", customerID, customerName, customerRoom);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/customer.txt", true))) {
-            bw.write(customerInfo);
-            bw.newLine();
-        } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
-        }
     }
     
     private String getTechnicianID(String selectedTechnician) {
@@ -413,6 +396,16 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         return null; // Technician not found
     }
     
+    private void addCustomerToFile(String customerID, String customerName, String customerRoom) {
+        String customerInfo = String.format("%s, %s, %s", customerID, customerName, customerRoom);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/customer.txt", true))) {
+            bw.write(customerInfo);
+            bw.newLine();
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+    
     private static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
 
@@ -428,6 +421,8 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
     }//GEN-LAST:event_technicianSelectActionPerformed
 
     private void insertTechnicianComboBox() {
+        
+        // Extract formatted arrays of technicians info into variable
         ArrayList<String> technicianInfoList = TechnicianComboBox.readTechnicianFile("data/technician.txt");
         if (technicianInfoList != null) {
             for (String info : technicianInfoList) {
