@@ -10,6 +10,11 @@ public class ManagerHomePage extends javax.swing.JFrame {
     
     private static String loggedInManager;
     
+    // Arrays to store table data
+    private String[][] appointmentData;
+    private String[][] userData;
+    private String[][] loginrecordData;
+    
     public ManagerHomePage(String loggedInManager) {
         displayAppointments();
         displayUserData();
@@ -35,6 +40,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         appointmentsTable = new javax.swing.JTable();
         logoutBtn = new javax.swing.JButton();
+        registerBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,6 +110,14 @@ public class ManagerHomePage extends javax.swing.JFrame {
             }
         });
 
+        registerBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        registerBtn.setText("Register New User");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,8 +151,13 @@ public class ManagerHomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homepageLabel)
-                .addGap(159, 159, 159)
-                .addComponent(logoutBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(logoutBtn))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(registerBtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -146,12 +165,13 @@ public class ManagerHomePage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(logoutBtn)
-                        .addGap(48, 48, 48))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(homepageLabel)
-                        .addGap(18, 18, 18)))
+                    .addComponent(logoutBtn)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(homepageLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(37, 37, 37)
+                            .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginrecordsLabel)
                     .addComponent(appointmentsLabel))
@@ -198,9 +218,16 @@ public class ManagerHomePage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private String[][] appointmentData;
-    private String[][] userData;
-    private String[][] loginrecordData;
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        try {
+            ManagerRegister registerFrame = new ManagerRegister(loggedInManager); // Create an instance of the Register class
+            registerFrame.setVisible(true);
+            this.dispose();
+        } catch (IOException e) {
+            System.err.println("Error opening Registration page: " + e.getMessage());
+        }
+    }//GEN-LAST:event_registerBtnActionPerformed
+
  
     private void displayAppointments() {
         String filePath = "data/appointment.txt";
@@ -296,6 +323,7 @@ public class ManagerHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel loginrecordsLabel;
     private javax.swing.JTable loginrecordsTable;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JButton registerBtn;
     private javax.swing.JLabel systemusersLabel;
     private javax.swing.JTable systemusersTable;
     private javax.swing.JButton viewAppointmentsBtn;

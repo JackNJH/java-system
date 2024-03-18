@@ -12,9 +12,11 @@ public class Login extends javax.swing.JFrame {
     private BufferedReader br;
     private BufferedWriter bw;
 
+    // Initialize formatter function
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy h:mma");
+    
     public Login() throws IOException{
         initComponents();
-        bw = new BufferedWriter(new FileWriter("data/login_records.txt", true));
     }
 
     @SuppressWarnings("unchecked")
@@ -27,8 +29,6 @@ public class Login extends javax.swing.JFrame {
         passwordField = new javax.swing.JTextField();
         usernameField = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
-        registerText = new javax.swing.JLabel();
-        registerBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,16 +63,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        registerText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        registerText.setText("Are you a new user?");
-
-        registerBtn.setText("Register");
-        registerBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,11 +81,6 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(236, 236, 236)
                         .addComponent(loginTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(registerText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(registerBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(250, 250, 250)
                         .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -116,11 +101,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registerText)
-                    .addComponent(registerBtn))
-                .addGap(21, 21, 21))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,9 +110,6 @@ public class Login extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
-    
-    // Initialize formatter function
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy h:mma");
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String enteredUsername = usernameField.getText().trim();
@@ -165,16 +143,6 @@ public class Login extends javax.swing.JFrame {
             passwordField.setText("");
         }
     }//GEN-LAST:event_loginBtnActionPerformed
-
-    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        try {
-            Register registerFrame = new Register(); // Create an instance of the Register class
-            registerFrame.setVisible(true);
-            this.dispose();
-        } catch (IOException e) {
-            System.err.println("Error opening Registration page: " + e.getMessage());
-        }
-    }//GEN-LAST:event_registerBtnActionPerformed
 
     private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
         // TODO add your handling code here:
@@ -214,8 +182,11 @@ public class Login extends javax.swing.JFrame {
 
     private void storeLoginRecord(String username, String role) {
         try {
+            bw = new BufferedWriter(new FileWriter("data/login_records.txt", true));
+            
             LocalDateTime now = LocalDateTime.now();
             String formattedDateTime = formatter.format(now);
+            
             bw.write(username+", "+role+", "+formattedDateTime);
             bw.newLine();
         } catch (IOException e) {
@@ -247,8 +218,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel loginTitle;
     private javax.swing.JTextField passwordField;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JButton registerBtn;
-    private javax.swing.JLabel registerText;
     private javax.swing.JTextField usernameField;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables

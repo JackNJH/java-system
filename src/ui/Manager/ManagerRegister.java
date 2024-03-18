@@ -1,10 +1,14 @@
-package ui;
+package ui.Manager;
 import java.io.*;
 import javax.swing.JOptionPane;
+import ui.Login;
+import ui.Login;
 import utils.InputValidator;
 
 
-public class Register extends javax.swing.JFrame {
+public class ManagerRegister extends javax.swing.JFrame {
+    
+    private static String loggedInManager;
     
     private BufferedReader br;
     private BufferedWriter bw;
@@ -12,9 +16,12 @@ public class Register extends javax.swing.JFrame {
     private int lastManagerID;
     private int lastTechnicianID;
     
-    public Register() throws IOException {
+    
+    public ManagerRegister(String loggedInManager) throws IOException {
         initComponents();
         getLastIDs();
+        
+        this.loggedInManager = loggedInManager;
     }
 
     @SuppressWarnings("unchecked")
@@ -30,9 +37,8 @@ public class Register extends javax.swing.JFrame {
         cpasswordField = new javax.swing.JTextField();
         userroleLabel = new javax.swing.JLabel();
         registerBtn = new javax.swing.JButton();
-        loginText = new javax.swing.JLabel();
-        loginBtn = new javax.swing.JButton();
         userroleField = new javax.swing.JComboBox<>();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,21 +81,19 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
-        loginText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        loginText.setText("Already have an account?");
-
-        loginBtn.setText("Login");
-        loginBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginBtnActionPerformed(evt);
-            }
-        });
-
         userroleField.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         userroleField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Technician" }));
         userroleField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userroleFieldActionPerformed(evt);
+            }
+        });
+
+        backBtn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -103,11 +107,6 @@ public class Register extends javax.swing.JFrame {
                         .addGap(197, 197, 197)
                         .addComponent(loginTitle))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(loginText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(loginBtn))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -116,7 +115,6 @@ public class Register extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(70, 70, 70)
                                     .addComponent(usernameLabel)
                                     .addGap(18, 18, 18)
                                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -130,7 +128,10 @@ public class Register extends javax.swing.JFrame {
                                         .addComponent(userroleField, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(188, 188, 188)
-                                .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -156,11 +157,9 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(userroleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginText)
-                    .addComponent(loginBtn))
-                .addGap(21, 21, 21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(backBtn)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -303,13 +302,15 @@ public class Register extends javax.swing.JFrame {
         
     }
     
-    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        openLoginPage();
-    }//GEN-LAST:event_loginBtnActionPerformed
-
     private void userroleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userroleFieldActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_userroleFieldActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        ManagerHomePage managerHP = new ManagerHomePage(loggedInManager);
+        managerHP.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
 
     private void openLoginPage() {
     try {
@@ -326,19 +327,22 @@ public class Register extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Register().setVisible(true);
+                    if (loggedInManager != null && !loggedInManager.isEmpty()) {
+                        new ManagerRegister(loggedInManager).setVisible(true);
+                    } else {
+                        System.out.println("No manager logged in.");
+                    }
                 } catch (IOException e) {
-                    System.err.println("Error initializing Register: " + e.getMessage());
+                    System.err.println("Error initializing ManagerRegister: " + e.getMessage());
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
     private javax.swing.JTextField cpasswordField;
     private javax.swing.JLabel cpasswordLabel;
-    private javax.swing.JButton loginBtn;
-    private javax.swing.JLabel loginText;
     private javax.swing.JLabel loginTitle;
     private javax.swing.JTextField passwordField;
     private javax.swing.JLabel passwordLabel;
