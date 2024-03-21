@@ -16,7 +16,7 @@ The structure of each `.txt` file used in the system:
 
 ## technician.txt
 - Contains technician information.
-    - `{technicianID, technicianName, specialty}`
+    - `{technicianID, technicianName, specialty, availability}`
 
 ## appointment.txt
 - Contains appointment information.
