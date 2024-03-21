@@ -4,6 +4,10 @@
  */
 package ui.Technician;
 
+import java.io.IOException;
+import javax.swing.table.DefaultTableModel;
+import utils.CSVParser;
+
 /**
  *
  * @author Preston
@@ -15,6 +19,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
      */
     public TechnicianHomePage() {
         initComponents();
+//        displayAppointments(4, "0,1,2,3");
     }
 
     /**
@@ -29,7 +34,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        appointmentsTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,7 +43,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
 
         jButton1.setText("Logout");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,7 +69,16 @@ public class TechnicianHomePage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(appointmentsTable);
+        DefaultTableModel model = (DefaultTableModel) appointmentsTable.getModel();
+
+        String[][] appointmentData = displayAppointments(4, "0,5,4,6");
+
+        model.setRowCount(0);
+
+        for (String[] rowData : appointmentData ) {
+            model.addRow(rowData);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,6 +141,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -135,14 +150,54 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         });
     }
     
+    
+    
+    public String[][] displayAppointments(int counter, String selector) {
+        
+        String[][] appointmentData = null;
+        String filePath = "data/appointment.txt";
+    
+        try {
+            String[][] allData = CSVParser.parseCSV(filePath);
+
+            appointmentData = new String[allData.length][counter];
+            for (int i = 0; i < allData.length; i++) {
+                String[] row = allData[i];
+                if (row.length >= 1) {
+                    
+                    // Converts String apptRows to array values.
+                    String[] apptRowsArray = selector.split(",");
+                    
+                    for (int j = 0; j < counter; j++) {
+                        appointmentData[i][j] = row[Integer.parseInt(apptRowsArray[j])]; // Converts array values to integer and displays data.
+                    }
+                    
+                } else {
+                    //Error handling
+                    System.err.println("Invalid row format at index " + i);
+                }
+            }
+            
+            return appointmentData;
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return appointmentData;
+        
+    }
+    
     // Reminder to show the appointments available according to the technician's skillset.
     
     
 
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable appointmentsTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

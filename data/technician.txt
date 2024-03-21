@@ -1,4 +1,4 @@
-T1, Jack, Electrician
-T2, Bob, Electrician
-T3, Donkey, Engineer
-T4, Boozi, Mechanic
+T1, Jack, Electrician, AVAILABLE
+T2, Bob, Electrician, AVAILABLE
+T3, Donkey, Engineer, AVAILABLE
+T4, Boozi, Mechanic, AVAILABLE
