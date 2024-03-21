@@ -12,12 +12,13 @@ public class Technician extends User {
     
     private String technicianID;
     
-    private String technicianSkills;
+    private String technicianSkill;
     
     private boolean technicianAvailability;
     
-    public Technician(String username, String password) {
+    public Technician(String username, String password, String skill) {
         super(username, password);
+        technicianSkill = skill;
         setRole("Technician");
     }
     
