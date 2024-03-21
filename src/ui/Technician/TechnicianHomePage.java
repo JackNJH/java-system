@@ -86,11 +86,11 @@ public class TechnicianHomePage extends javax.swing.JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = appointmentsTable.rowAtPoint(evt.getPoint());
-                int col = appointmentsTable.columnAtPoint(evt.getPoint());
+                //        int col = appointmentsTable.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
                     // Load new page for the specific appointment
 
-                    System.out.println("The row selected is: " + row + " and the column selected is: " + col);
+                    System.out.println("The row selected is: " + row);
 
                 }
             }
