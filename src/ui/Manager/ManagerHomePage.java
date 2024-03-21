@@ -274,28 +274,20 @@ public class ManagerHomePage extends javax.swing.JFrame {
         int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove "+usernameToDelete+"?", "Confirm Clear", JOptionPane.YES_NO_OPTION);
         
         if (confirmation == JOptionPane.YES_OPTION){
-            try {
-                // Input file paths
-                String userFilePath = "data/user.txt";
-                String managerFilePath = "data/manager.txt";
-                String technicianFilePath = "data/technician.txt";
-                String appointmentFilePath = "data/appointment.txt";
-
-                // Delete user from user.txt and update role files
-                deleteUser(usernameToDelete, userFilePath, managerFilePath, technicianFilePath, appointmentFilePath);
-
-
-            } catch (IOException e) {
-                System.err.println("Error deleting user: " + e.getMessage());
-                JOptionPane.showMessageDialog(this, "Error deleting user", "Delete User", JOptionPane.ERROR_MESSAGE);
-            }
+            // Input file paths
+            String userFilePath = "data/user.txt";
+            String managerFilePath = "data/manager.txt";
+            String technicianFilePath = "data/technician.txt";
+            String appointmentFilePath = "data/appointment.txt";
+            // Delete user from user.txt and update role files
+            deleteUser(usernameToDelete, userFilePath, managerFilePath, technicianFilePath, appointmentFilePath);
         }
     }//GEN-LAST:event_deleteUserBtnActionPerformed
 
-    private void deleteUser(String usernameToDelete, String userFilePath, String managerFilePath, String technicianFilePath, String appointmentFilePath) throws IOException {
+    private void deleteUser(String usernameToDelete, String userFilePath, String managerFilePath, String technicianFilePath, String appointmentFilePath) {
         try {
             
-            // Read string content into 2D array
+            // Read file content into 2D array
             String[][] userDataArray = CSVParser.parseCSV(userFilePath);
             String[][] managerDataArray = CSVParser.parseCSV(managerFilePath);
             String[][] technicianDataArray = CSVParser.parseCSV(technicianFilePath);
@@ -321,7 +313,6 @@ public class ManagerHomePage extends javax.swing.JFrame {
         
         } catch (IOException e) {
             System.err.println("Error deleting user: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Error deleting user", "Delete User", JOptionPane.ERROR_MESSAGE);
         }
     }
     

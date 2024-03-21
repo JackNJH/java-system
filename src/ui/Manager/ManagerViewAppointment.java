@@ -1,6 +1,13 @@
 package ui.Manager;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -31,6 +38,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         tipsLabel = new javax.swing.JLabel();
         filterField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        deleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,16 +54,19 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         viewDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = viewDetailsTable.getSelectedRow();
-                if (selectedRow != -1) { // Ensure a row is selected
-                    String appointmentID = appointmentData[selectedRow][0];
-                    String customerName = appointmentData[selectedRow][1];
-                    String selectedTechnician = appointmentData[selectedRow][3];
+                int columnClicked = viewDetailsTable.columnAtPoint(evt.getPoint());
+                if (columnClicked == 0) {
+                    int selectedRow = viewDetailsTable.getSelectedRow();
+                    if (selectedRow != -1) { // Ensure a row is selected
+                        String appointmentID = appointmentData[selectedRow][0];
+                        String customerName = appointmentData[selectedRow][1];
+                        String selectedTechnician = appointmentData[selectedRow][3];
 
-                    // Create an instance of ManagerAdditionalDetails and pass the appointmentID and customerName
-                    ManagerAdditionalDetails additionalDetailsFrame = new ManagerAdditionalDetails(appointmentID, customerName, loggedInManager, selectedTechnician);
-                    additionalDetailsFrame.setVisible(true);
-                    ManagerViewAppointment.this.dispose();
+                        // Create an instance of ManagerAdditionalDetails and pass the appointmentID and customerName
+                        ManagerAdditionalDetails additionalDetailsFrame = new ManagerAdditionalDetails(appointmentID, customerName, loggedInManager, selectedTechnician);
+                        additionalDetailsFrame.setVisible(true);
+                        ManagerViewAppointment.this.dispose();
+                    }
                 }
             }
         });
@@ -78,8 +89,8 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
             }
         });
 
-        tipsLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tipsLabel.setText("(Click on row to view/edit additional details)");
+        tipsLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tipsLabel.setText("(Click on appointment ID column to view/edit additional details)");
 
         filterField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filterField.addActionListener(new java.awt.event.ActionListener() {
@@ -91,24 +102,34 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Filter:");
 
+        deleteBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteBtn.setText("Delete Appointment");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(viewDetailsLabel)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tipsLabel)
-                        .addGap(176, 176, 176)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filterField, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(goBackBtn)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(goBackBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(deleteBtn)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -123,7 +144,9 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -161,6 +184,68 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_filterFieldActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        int selectedRow = viewDetailsTable.getSelectedRow(); // This gets the row number of the selected row from the table starting from 0
+        
+        // -1 means no row selected since indices start from 0
+        if (selectedRow == -1) { 
+            JOptionPane.showMessageDialog(this, "Please select an appointment to delete.", "Delete Appointment", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String appointmentID = viewDetailsTable.getValueAt(selectedRow, 0).toString(); // Get value of first column 
+        
+        int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete "+appointmentID+"?", "Confirm Clear", JOptionPane.YES_NO_OPTION);
+        
+        if (confirmation == JOptionPane.YES_OPTION){
+            // Input file paths
+            String appointmentFilePath = "data/appointment.txt";
+            String receiptFilePath = "data/receipt.txt";
+            // Delete user from user.txt and update role files
+            deleteAppt(appointmentID, appointmentFilePath, receiptFilePath);
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void deleteAppt(String appointmentID, String appointmentFilePath, String receiptFilePath){
+        
+        try {
+            String[][] appointmentDataArray = CSVParser.parseCSV(appointmentFilePath);
+            String[][] receiptDataArray = CSVParser.parseCSV(receiptFilePath);
+            
+            // Remove appointment and receipt entries with the specified ID
+            appointmentDataArray = removeEntry(appointmentID, appointmentDataArray, 0); // Index 0 for appointment ID
+            receiptDataArray = removeEntry(appointmentID, receiptDataArray, 1);
+            
+            writeCSV(appointmentDataArray, appointmentFilePath);
+            writeCSV(receiptDataArray, receiptFilePath);
+            
+            JOptionPane.showMessageDialog(this, "Appointment deleted successfully", "Delete Appointment", JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (IOException e) {
+            System.err.println("Error deleting user: " + e.getMessage());
+        }
+    }
+    
+    private String[][] removeEntry(String entryID, String[][] dataArray, int idIndex) {
+       List<String[]> updatedList = new ArrayList<>();
+       for (String[] entry : dataArray) {
+           if (!entry[idIndex].equals(entryID)) { // Keep rows whose ID doesn't match
+               updatedList.add(entry);
+           }
+       }
+       return updatedList.toArray(new String[0][]);
+   }
+    
+    
+    private void writeCSV(String[][] data, String filePath) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (String[] row : data) {
+                writer.write(String.join(", ", row));
+                writer.newLine();
+            }
+        }
+    }
+    
     
     private void displayAppointments(){
         
@@ -250,6 +335,7 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JTextField filterField;
     private javax.swing.JButton goBackBtn;
     private javax.swing.JLabel jLabel1;
