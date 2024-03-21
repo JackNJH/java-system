@@ -80,6 +80,22 @@ public class TechnicianHomePage extends javax.swing.JFrame {
             model.addRow(rowData);
         }
 
+        // Function allow for row onclick events to take place
+
+        appointmentsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = appointmentsTable.rowAtPoint(evt.getPoint());
+                int col = appointmentsTable.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    // Load new page for the specific appointment
+
+                    System.out.println("The row selected is: " + row + " and the column selected is: " + col);
+
+                }
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
