@@ -1,8 +1,6 @@
 package ui.Manager;
 import java.io.*;
 import javax.swing.JOptionPane;
-import ui.Login;
-import ui.Login;
 import utils.InputValidator;
 
 
@@ -175,7 +173,7 @@ public class ManagerRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_cpasswordFieldActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        
+           
         // Reads input for following fields and ensures data consistency with trim
         String username = usernameField.getText().trim(); 
         String password = passwordField.getText().trim();
@@ -238,11 +236,14 @@ public class ManagerRegister extends javax.swing.JFrame {
                 bw.newLine();
             } else if (userRole.equalsIgnoreCase("Technician")) {
                 bw = new BufferedWriter(new FileWriter("data/technician.txt", true));
-                bw.write("T" + lastTechnicianID + ", " + username + ", " + null);
+                bw.write("T" + lastTechnicianID + ", " + username + ", " + "General");
                 bw.newLine();
             }
             
             JOptionPane.showMessageDialog(this, "User registered successfully", "Registration Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            ManagerHomePage managerHomePage = new ManagerHomePage(loggedInManager);
+            managerHomePage.setVisible(true);
             
         } catch (IOException e) {
             System.err.println("Error writing to file or reading file: " + e.getMessage());
@@ -290,7 +291,7 @@ public class ManagerRegister extends javax.swing.JFrame {
         lastManagerID++;
         
         //Last technician ID
-        br = new BufferedReader(new FileReader("data/manager.txt"));
+        br = new BufferedReader(new FileReader("data/technician.txt"));
         while ((line = br.readLine()) != null) {
             String[] parts = line.split(", ");
             if (parts.length > 0) {
@@ -307,7 +308,7 @@ public class ManagerRegister extends javax.swing.JFrame {
     }
     
     private void userroleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userroleFieldActionPerformed
-
+        
     }//GEN-LAST:event_userroleFieldActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed

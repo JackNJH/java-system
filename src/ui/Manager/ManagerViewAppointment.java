@@ -198,22 +198,32 @@ public class ManagerViewAppointment extends javax.swing.JFrame {
                         }
                     }
                     
-                    // Match technician ID for technician name
+                    // Match manager ID for manager name
                     String managerId = appointmentRow[1];
+                    boolean managerMatched = false;
                     for (String[] managerRow : managerDataRaw) {
                         if (managerRow.length >= 2 && managerId.equals(managerRow[0])) {
                             appointmentData[i][4] = managerRow[1]; // managerName
+                            managerMatched = true;
                             break; 
                         }
                     }
+                    if (!managerMatched) {
+                        appointmentData[i][4] = "DELETED";
+                    }
                     
-                    // Match manager ID for manager name
+                    // Match technician ID for technician name
                     String technicianId = appointmentRow[3];
+                    boolean technicianMatched = false;
                     for (String[] technicianRow : technicianDataRaw) {
                         if (technicianRow.length >= 2 && technicianId.equals(technicianRow[0])) {
                             appointmentData[i][3] = technicianRow[1]; // technicianName
+                            technicianMatched = true;
                             break; 
                         }
+                    }
+                    if (!technicianMatched) {
+                        appointmentData[i][3] = "NULL";
                     }
                     
                 } else {

@@ -245,7 +245,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         String appointmentStatus = (technicianID != null) ? "ASSIGNED" : "PENDING ASSIGNMENT";
         
         if (addComments.isEmpty()) {
-            addComments = null;
+            addComments = "NULL";
         }        
         
         // If no matching customer name + room is found in customer.txt, create new row for new customer
@@ -258,7 +258,7 @@ public class ManagerBookAppointment extends javax.swing.JFrame {
         
         // If no additional comments, save addComments data without quotations (addComments = null)
         // For consistent formatting's sake (?)
-        if (addComments == null) {
+        if (addComments.equals("NULL")) {
             appointmentInfo = String.format("%s, %s, %s, %s, \"%s\", %s, %s, NULL, %s",
                 appointmentID, managerID, customerID, technicianID, request, getCurrentDate(), appointmentStatus, addComments);
         } else {
