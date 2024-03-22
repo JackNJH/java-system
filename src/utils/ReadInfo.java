@@ -23,11 +23,11 @@ public class ReadInfo {
                 String[] row = allData[i];
                 if (row.length >= 1) {
                     
-                    // Converts String apptRows to array values.
-                    String[] apptRowsArray = selector.split(",");
+                    // Converts String selector to array values.
+                    String[] rowsArray = selector.split(",");
                     
                     for (int j = 0; j < counter; j++) {
-                        resultData[i][j] = row[Integer.parseInt(apptRowsArray[j])]; // Converts array values to integer and displays data.
+                        resultData[i][j] = row[Integer.parseInt(rowsArray[j])]; // Converts array values to integer and displays data.
                     }
                     
                 } else {
@@ -43,6 +43,36 @@ public class ReadInfo {
         }
         
         return resultData;
+        
+    }
+    
+    public static String getUserByID(String userID, String filePathString) {
+        
+        String filePathCustomer = "data/customer.txt";
+        String filePathManager = "data/manager.txt";
+        String filePathTechnician = "data/technician.txt";
+        
+        String selector = null;
+        
+        if (filePathString.equals("user")) {
+            selector = filePathCustomer;
+        } else if (filePathString.equals("manager")) {
+            selector = filePathManager;
+        } else if (filePathString.equals("technician")) {
+            selector = filePathTechnician;
+        }
+        
+        String[][] userInformation = getData(2, "0,1", selector);
+        String user = null;
+        for (String[] userInfo : userInformation) {
+            if (userInfo[0].equals(userID) && !userInfo[0].equals(null)) {
+                user = userInfo[1];
+            } else {
+                user = "Not set";
+            }
+        }
+        
+        return user;
         
     }
 

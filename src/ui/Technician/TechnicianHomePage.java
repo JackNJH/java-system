@@ -187,14 +187,12 @@ public class TechnicianHomePage extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
+
     public String[][] displayAppointments(int counter, String selector) {
-        
+
         String[][] appointmentData = null;
         String filePath = "data/appointment.txt";
-    
+
         try {
             String[][] allData = CSVParser.parseCSV(filePath);
 
@@ -202,35 +200,31 @@ public class TechnicianHomePage extends javax.swing.JFrame {
             for (int i = 0; i < allData.length; i++) {
                 String[] row = allData[i];
                 if (row.length >= 1) {
-                    
+
                     // Converts String apptRows to array values.
                     String[] apptRowsArray = selector.split(",");
-                    
+
                     for (int j = 0; j < counter; j++) {
                         appointmentData[i][j] = row[Integer.parseInt(apptRowsArray[j])]; // Converts array values to integer and displays data.
                     }
-                    
+
                 } else {
                     //Error handling
                     System.err.println("Invalid row format at index " + i);
                 }
             }
-            
+
             return appointmentData;
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        return appointmentData;
-        
-    }
-    
-    // Reminder to show the appointments available according to the technician's skillset.
-    
-    
 
-    
+        return appointmentData;
+
+    }
+
+    // Reminder to show the appointments available according to the technician's skillset.
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable appointmentsTable;

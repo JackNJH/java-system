@@ -23,26 +23,46 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         
         String[] rowData = getAppointmentRow(rowSelector);
         
-        String AppointmentID = rowData[0];
-        String ManagerID = rowData[1];
-        String UserID = rowData[2];
-        String TechnicianID = rowData[3];
-        String userProblem = rowData[4];
+        String appointmentID = rowData[0];
+        String managerID = rowData[1];
+        String manager = ReadInfo.getUserByID(managerID, "manager");
+        String userID = rowData[2];
+        String user = ReadInfo.getUserByID(userID, "user");
+        String technicianID = rowData[3];
+        String technician = ReadInfo.getUserByID(technicianID, "technician");
+        String userContext = rowData[4];
         String timeSubmitted = rowData[5];
         String status = rowData[6];
         String requestCompletionTime = rowData[7];
         String userComment = rowData[8];
         
-        String[] rowDataReceipt = getReceiptRow(AppointmentID);
+        String[] rowDataReceipt = getReceiptRow(appointmentID);
         
         // The following variables are to be retrieved from another file.
         String receiptID = rowDataReceipt[0];
         String receiptAppointmentID = rowDataReceipt[1];
         String userFeedback = rowDataReceipt[2];
         String paymentStatus = rowDataReceipt[3];
-        String paymentDate = rowDataReceipt[4];
+        String paymentTime = rowDataReceipt[4];
         String paymentMade = rowDataReceipt[5];
         String technicianComment = rowDataReceipt[6];
+
+        
+        jLabelAppointmentID.setText(appointmentID);
+        jLabelTime.setText(timeSubmitted);
+        jLabelUser.setText(user);
+        jLabelTechnician.setText(technician);
+        jLabelManager.setText(manager);
+        
+        jLabelUserPaymentStatus.setText(paymentStatus);
+        jLabelUserPaymentTime.setText(paymentTime);
+        jLabelAppointmentCompletionTime.setText(requestCompletionTime);
+        
+        textareaUser.setText(userContext);
+        textareaUserComment.setText(userComment);
+        textareaUserFeedback.setText(userFeedback);
+        textareaTechnicianComment.setText(technicianComment);
+        
     }
 
     /**
@@ -55,60 +75,50 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        textfieldAppointmentID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textfieldAssignedBy = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        textFieldAssignedto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        textfieldUser = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textareaUser = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
-        textfieldTimeSubmitted = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        textfieldTimeOrigin = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textareaUserComment = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        textareaUserFeedback = new javax.swing.JTextArea();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        textareaTechnicianComment = new javax.swing.JTextArea();
         btnReturn = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        textfieldPaymentDate = new javax.swing.JTextField();
-        textfieldUserPaid = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         textfieldRM = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         btnPaymentConfirmation = new javax.swing.JButton();
+        jLabelAppointmentID = new javax.swing.JLabel();
+        jLabelUser = new javax.swing.JLabel();
+        jLabelManager = new javax.swing.JLabel();
+        jLabelTechnician = new javax.swing.JLabel();
+        jLabelTime = new javax.swing.JLabel();
+        jLabelUserPaymentStatus = new javax.swing.JLabel();
+        jLabelUserPaymentTime = new javax.swing.JLabel();
+        jLabelAppointmentCompletionTime = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("AppointmentID:");
 
-        textfieldAppointmentID.setText("jTextField1");
-
         jLabel2.setText("Assigned by:");
-
-        textfieldAssignedBy.setText("jTextField2");
 
         jLabel3.setText("Assigned to:");
 
-        textFieldAssignedto.setText("jTextField3");
-
-        jLabel4.setText("User:");
-
-        textfieldUser.setText("jTextField1");
+        jLabel4.setText("Customer:");
 
         jLabel5.setText("User Problem:");
 
@@ -118,35 +128,27 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
 
         jLabel6.setText("Time Submitted:");
 
-        textfieldTimeSubmitted.setText("jTextField1");
-
-        jLabel7.setText("Issue presented time:");
-
-        textfieldTimeOrigin.setText("jTextField2");
-
         jLabel8.setText("Status:");
 
         jLabel9.setText("Completion time:");
 
-        jTextField2.setText("jTextField2");
-
         jLabel10.setText("User comment:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        textareaUserComment.setColumns(20);
+        textareaUserComment.setRows(5);
+        jScrollPane2.setViewportView(textareaUserComment);
 
         jLabel11.setText("User feedback:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        textareaUserFeedback.setColumns(20);
+        textareaUserFeedback.setRows(5);
+        jScrollPane3.setViewportView(textareaUserFeedback);
 
         jLabel12.setText("Technician comment:");
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane4.setViewportView(jTextArea3);
+        textareaTechnicianComment.setColumns(20);
+        textareaTechnicianComment.setRows(5);
+        jScrollPane4.setViewportView(textareaTechnicianComment);
 
         btnReturn.setText("Back");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -161,10 +163,6 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
 
         jLabel15.setText("Payment date:");
 
-        textfieldPaymentDate.setText("jTextField1");
-
-        textfieldUserPaid.setText("jTextField1");
-
         jLabel16.setText("Payment made:");
 
         textfieldRM.setText("jTextField1");
@@ -178,113 +176,114 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
             }
         });
 
+        jLabelAppointmentID.setText("jLabel13");
+        jLabelAppointmentID.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jLabelAppointmentIDComponentShown(evt);
+            }
+        });
+
+        jLabelUser.setText("jLabel18");
+
+        jLabelManager.setText("jLabel19");
+
+        jLabelTechnician.setText("jLabel20");
+
+        jLabelTime.setText("jLabel21");
+
+        jLabelUserPaymentStatus.setText("jLabel7");
+
+        jLabelUserPaymentTime.setText("jLabel13");
+
+        jLabelAppointmentCompletionTime.setText("jLabel18");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelAppointmentCompletionTime))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(286, 286, 286)
+                        .addComponent(jLabel11))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textfieldAppointmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textfieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textfieldAssignedBy, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textfieldTimeSubmitted, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel7)
-                                        .addGap(22, 22, 22)
-                                        .addComponent(textfieldTimeOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textFieldAssignedto, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(286, 286, 286)
-                                .addComponent(jLabel11))
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel5))
-                        .addContainerGap(40, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelAppointmentID)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelUser)
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelManager)
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelTechnician))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelTime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelUserPaymentStatus)
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel15)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jScrollPane4)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(25, 25, 25)
-                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
-                                        .addComponent(jScrollPane1)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel14)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(textfieldUserPaid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(33, 33, 33)
-                                            .addComponent(jLabel15)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(textfieldPaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(btnReturn)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnReturn)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel17)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textfieldRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnPaymentConfirmation)))))
-                        .addGap(40, 40, 40))))
+                                .addComponent(jLabelUserPaymentTime)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel16)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textfieldRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPaymentConfirmation)))))
+                .addGap(0, 50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(textfieldAppointmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(textfieldAssignedBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(textFieldAssignedto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(textfieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(jLabelAppointmentID)
+                    .addComponent(jLabelUser)
+                    .addComponent(jLabelManager)
+                    .addComponent(jLabelTechnician))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(textfieldTimeSubmitted, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(textfieldTimeOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTime))
                 .addGap(51, 51, 51)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -304,18 +303,18 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(textfieldUserPaid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
-                    .addComponent(textfieldPaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(textfieldRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
-                    .addComponent(btnPaymentConfirmation))
+                    .addComponent(btnPaymentConfirmation)
+                    .addComponent(jLabelUserPaymentStatus)
+                    .addComponent(jLabelUserPaymentTime))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReturn))
+                    .addComponent(btnReturn)
+                    .addComponent(jLabelAppointmentCompletionTime))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -329,6 +328,10 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
     private void btnPaymentConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentConfirmationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPaymentConfirmationActionPerformed
+
+    private void jLabelAppointmentIDComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabelAppointmentIDComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelAppointmentIDComponentShown
 
     /**
      * @param args the command line arguments
@@ -404,26 +407,24 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAppointmentCompletionTime;
+    private javax.swing.JLabel jLabelAppointmentID;
+    private javax.swing.JLabel jLabelManager;
+    private javax.swing.JLabel jLabelTechnician;
+    private javax.swing.JLabel jLabelTime;
+    private javax.swing.JLabel jLabelUser;
+    private javax.swing.JLabel jLabelUserPaymentStatus;
+    private javax.swing.JLabel jLabelUserPaymentTime;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField textFieldAssignedto;
+    private javax.swing.JTextArea textareaTechnicianComment;
     private javax.swing.JTextArea textareaUser;
-    private javax.swing.JTextField textfieldAppointmentID;
-    private javax.swing.JTextField textfieldAssignedBy;
-    private javax.swing.JTextField textfieldPaymentDate;
+    private javax.swing.JTextArea textareaUserComment;
+    private javax.swing.JTextArea textareaUserFeedback;
     private javax.swing.JTextField textfieldRM;
-    private javax.swing.JTextField textfieldTimeOrigin;
-    private javax.swing.JTextField textfieldTimeSubmitted;
-    private javax.swing.JTextField textfieldUser;
-    private javax.swing.JTextField textfieldUserPaid;
     // End of variables declaration//GEN-END:variables
 }
