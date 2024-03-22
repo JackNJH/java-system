@@ -32,7 +32,14 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="723" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" min="-2" pref="723" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -53,7 +60,12 @@
                   </Group>
               </Group>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="54" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -89,7 +101,7 @@
                 <Column editable="true" title="Status" type="java.lang.String"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="DefaultTableModel model = (DefaultTableModel) appointmentsTable.getModel();&#xa;&#xa;//String[][] appointmentData = displayAppointments(4, &quot;0,5,4,6&quot;);&#xa;&#xa;String[][] appointmentData = ReadInfo.getData(4, &quot;0,5,4,6&quot;, &quot;data/appointment.txt&quot;);&#xa;&#xa;model.setRowCount(0);&#xa;&#xa;for (String[] rowData : appointmentData ) {&#xa;    model.addRow(rowData);&#xa;}&#xa;&#xa;// Function allow for row onclick events to take place&#xa;&#xa;appointmentsTable.addMouseListener(new java.awt.event.MouseAdapter() {&#xa;    @Override&#xa;    public void mouseClicked(java.awt.event.MouseEvent evt) {&#xa;        int row = appointmentsTable.rowAtPoint(evt.getPoint());&#xa;        int col = appointmentsTable.columnAtPoint(evt.getPoint());&#xa;        if (row &gt;= 0 &amp;&amp; col &gt;= 0) {&#xa;            // Load new page for the specific appointment&#xa;&#xa;            System.out.println(&quot;The row selected is: &quot; + row);&#xa;&#xa;        }&#xa;    }&#xa;});">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="DefaultTableModel model = (DefaultTableModel) appointmentsTable.getModel();&#xa;&#xa;//String[][] appointmentData = displayAppointments(4, &quot;0,5,4,6&quot;);&#xa;&#xa;String[][] appointmentData = ReadInfo.getData(4, &quot;0,5,4,6&quot;, &quot;data/appointment.txt&quot;);&#xa;&#xa;model.setRowCount(0);&#xa;&#xa;for (String[] rowData : appointmentData ) {&#xa;    model.addRow(rowData);&#xa;}&#xa;&#xa;// Function allow for row onclick events to take place&#xa;&#xa;appointmentsTable.addMouseListener(new java.awt.event.MouseAdapter() {&#xa;    @Override&#xa;    public void mouseClicked(java.awt.event.MouseEvent evt) {&#xa;        int row = appointmentsTable.rowAtPoint(evt.getPoint());&#xa;        int col = appointmentsTable.columnAtPoint(evt.getPoint());&#xa;        if (row &gt;= 0 &amp;&amp; col &gt;= 0) {&#xa;            // Load new page for the specific appointment&#xa;&#xa;            System.out.println(&quot;The row selected is: &quot; + row);&#xa;&#xa;            new TechnicianAppointmentView(row).setVisible(true);&#xa;            ((javax.swing.JFrame) SwingUtilities.getWindowAncestor(appointmentsTable)).dispose();&#xa;&#xa;        }&#xa;    }&#xa;});">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
@@ -120,5 +132,25 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Set skillset:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox1">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
   </SubComponents>
 </Form>

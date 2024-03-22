@@ -18,8 +18,31 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
     /**
      * Creates new form TechnicianAppointmentView
      */
-    public TechnicianAppointmentView() {
+    public TechnicianAppointmentView(int rowSelector) {
         initComponents();
+        
+        String[] rowData = getAppointmentRow(rowSelector);
+        
+        String AppointmentID = rowData[0];
+        String ManagerID = rowData[1];
+        String UserID = rowData[2];
+        String TechnicianID = rowData[3];
+        String userProblem = rowData[4];
+        String timeSubmitted = rowData[5];
+        String status = rowData[6];
+        String requestCompletionTime = rowData[7];
+        String userComment = rowData[8];
+        
+        String[] rowDataReceipt = getReceiptRow(AppointmentID);
+        
+        // The following variables are to be retrieved from another file.
+        String receiptID = rowDataReceipt[0];
+        String receiptAppointmentID = rowDataReceipt[1];
+        String userFeedback = rowDataReceipt[2];
+        String paymentStatus = rowDataReceipt[3];
+        String paymentDate = rowDataReceipt[4];
+        String paymentMade = rowDataReceipt[5];
+        String technicianComment = rowDataReceipt[6];
     }
 
     /**
@@ -338,7 +361,7 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TechnicianAppointmentView().setVisible(true);
+//                new TechnicianAppointmentView().setVisible(true);
             }
         });
     }
@@ -349,41 +372,20 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         return appointmentData[selectedRow];
     }
     
-//    public static String[][] displayAppointments(int counter, String selector) {
-//        
-//        String[][] appointmentData = null;
-//        String filePath = "data/appointment.txt";
-//    
-//        try {
-//            String[][] allData = CSVParser.parseCSV(filePath);
-//
-//            appointmentData = new String[allData.length][counter];
-//            for (int i = 0; i < allData.length; i++) {
-//                String[] row = allData[i];
-//                if (row.length >= 1) {
-//                    
-//                    // Converts String apptRows to array values.
-//                    String[] apptRowsArray = selector.split(",");
-//                    
-//                    for (int j = 0; j < counter; j++) {
-//                        appointmentData[i][j] = row[Integer.parseInt(apptRowsArray[j])]; // Converts array values to integer and displays data.
-//                    }
-//                    
-//                } else {
-//                    //Error handling
-//                    System.err.println("Invalid row format at index " + i);
-//                }
-//            }
-//            
-//            return appointmentData;
-//            
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        
-//        return appointmentData;
-//        
-//    }
+    public static String[] getReceiptRow(String appointmentID) {
+        String[][] receiptData = ReadInfo.getData(7, "0,1,2,3,4,5,6", "data/receipt.txt");
+        String [] receiptDataRow = null;
+        
+        for (String[] receiptRow : receiptData) {
+            if (receiptRow[1].equals(appointmentID)) {
+                receiptDataRow = receiptRow;
+            }
+        }
+        
+        return receiptDataRow;
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPaymentConfirmation;
