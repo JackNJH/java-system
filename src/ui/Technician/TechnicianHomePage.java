@@ -7,6 +7,7 @@ package ui.Technician;
 import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 import utils.CSVParser;
+import utils.ReadInfo;
 
 /**
  *
@@ -72,7 +73,9 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         jScrollPane1.setViewportView(appointmentsTable);
         DefaultTableModel model = (DefaultTableModel) appointmentsTable.getModel();
 
-        String[][] appointmentData = displayAppointments(4, "0,5,4,6");
+        //String[][] appointmentData = displayAppointments(4, "0,5,4,6");
+
+        String[][] appointmentData = ReadInfo.getData(4, "0,5,4,6", "data/appointment.txt");
 
         model.setRowCount(0);
 

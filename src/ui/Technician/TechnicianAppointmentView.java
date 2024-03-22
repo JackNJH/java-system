@@ -7,6 +7,7 @@ package ui.Technician;
 import java.io.IOException;
 import java.util.Arrays;
 import utils.CSVParser;
+import utils.ReadInfo;
 
 /**
  *
@@ -343,46 +344,46 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
     }
     
     public static String[] getAppointmentRow(int selectedRow) {
-        String[][] appointmentData = displayAppointments(9, "0,1,2,3,4,5,6,7,8");
+        String[][] appointmentData = ReadInfo.getData(9, "0,1,2,3,4,5,6,7,8", "data/appointment.txt");
         
         return appointmentData[selectedRow];
     }
     
-    public static String[][] displayAppointments(int counter, String selector) {
-        
-        String[][] appointmentData = null;
-        String filePath = "data/appointment.txt";
-    
-        try {
-            String[][] allData = CSVParser.parseCSV(filePath);
-
-            appointmentData = new String[allData.length][counter];
-            for (int i = 0; i < allData.length; i++) {
-                String[] row = allData[i];
-                if (row.length >= 1) {
-                    
-                    // Converts String apptRows to array values.
-                    String[] apptRowsArray = selector.split(",");
-                    
-                    for (int j = 0; j < counter; j++) {
-                        appointmentData[i][j] = row[Integer.parseInt(apptRowsArray[j])]; // Converts array values to integer and displays data.
-                    }
-                    
-                } else {
-                    //Error handling
-                    System.err.println("Invalid row format at index " + i);
-                }
-            }
-            
-            return appointmentData;
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        return appointmentData;
-        
-    }
+//    public static String[][] displayAppointments(int counter, String selector) {
+//        
+//        String[][] appointmentData = null;
+//        String filePath = "data/appointment.txt";
+//    
+//        try {
+//            String[][] allData = CSVParser.parseCSV(filePath);
+//
+//            appointmentData = new String[allData.length][counter];
+//            for (int i = 0; i < allData.length; i++) {
+//                String[] row = allData[i];
+//                if (row.length >= 1) {
+//                    
+//                    // Converts String apptRows to array values.
+//                    String[] apptRowsArray = selector.split(",");
+//                    
+//                    for (int j = 0; j < counter; j++) {
+//                        appointmentData[i][j] = row[Integer.parseInt(apptRowsArray[j])]; // Converts array values to integer and displays data.
+//                    }
+//                    
+//                } else {
+//                    //Error handling
+//                    System.err.println("Invalid row format at index " + i);
+//                }
+//            }
+//            
+//            return appointmentData;
+//            
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        return appointmentData;
+//        
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPaymentConfirmation;
