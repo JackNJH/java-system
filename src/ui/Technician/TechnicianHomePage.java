@@ -4,23 +4,34 @@
  */
 package ui.Technician;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import utils.CSVParser;
 import utils.ReadInfo;
+import utils.Technician;
 
 /**
  *
  * @author Preston
  */
 public class TechnicianHomePage extends javax.swing.JFrame {
+    
+    private Technician tech;
+    
+//    private Object technician;
 
     /**
      * Creates new form TechnicianHomePage
      */
-    public TechnicianHomePage() {
+    public TechnicianHomePage(Technician tech) {
+        this.tech = tech;
+        System.out.println("Technician object in HomePage constructor: " + this.tech);
         initComponents();
+        
     }
 
     /**
@@ -97,7 +108,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
 
                     System.out.println("The row selected is: " + row);
 
-                    new TechnicianAppointmentView(row).setVisible(true);
+                    new TechnicianAppointmentView(row, tech).setVisible(true);
                     ((javax.swing.JFrame) SwingUtilities.getWindowAncestor(appointmentsTable)).dispose();
 
                 }
@@ -106,7 +117,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
 
         jLabel2.setText("Set skillset:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrician", "Engineer", "Mechanic" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,6 +159,26 @@ public class TechnicianHomePage extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
+        String[][] resultData = ReadInfo.getData(4, "0,1,2,3", "data/technician.txt");
+        String[] result;
+
+        for (String[] row : resultData) {
+            if (row[1].equals(tech.returnUsername())) {
+                jComboBox1.setSelectedItem(row[2]);
+                result = row;
+            }
+        }
+
+        jComboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Store the selected value in a variable
+                String selectedValue = jComboBox1.getSelectedItem().toString();
+
+                tech.setSkill(selectedValue);
+            }
+        });
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -182,7 +213,7 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TechnicianHomePage().setVisible(true);
+//                new TechnicianHomePage().setVisible(true);
             }
         });
     }

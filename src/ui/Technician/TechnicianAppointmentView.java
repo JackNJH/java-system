@@ -39,11 +39,15 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
     private String technicianComment;
     
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM uuuu");
+    
+    private Technician tech;
 
     /**
      * Creates new form TechnicianAppointmentView
      */
-    public TechnicianAppointmentView(int rowSelector) {
+    public TechnicianAppointmentView(int rowSelector, Technician tech) {
+        this.tech = tech;
+        System.out.println("Technician object in AppointmentView constructor: " + this.tech);
         initComponents();
         
         String[] rowData = getAppointmentRow(rowSelector);
@@ -98,6 +102,9 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         textareaUserComment.setText(userComment);
         textareaUserFeedback.setText(userFeedback);
         textareaTechnicianComment.setText(technicianComment);
+        textareaUser.setEditable(false);
+        textareaUserComment.setEditable(false);
+        textareaUserFeedback.setEditable(false);
         
         if (paymentStatus.equals("COMPLETED")) {
             textfieldRM.setText(paymentMade);
@@ -412,7 +419,7 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         
         Technician.updateReceipt("data/receipt.txt", jLabelReceiptID.getText(), jLabelAppointmentID.getText(), userFeedback, jLabelUserPaymentStatus.getText(), formattedDateTime, textfieldRM.getText(), textareaTechnicianComment.getText());
         
-        new TechnicianHomePage().setVisible(true);
+        new TechnicianHomePage(this.tech).setVisible(true);
         this.dispose();
         
         

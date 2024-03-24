@@ -130,8 +130,5 @@ public class Technician extends User {
         }
     }
 
-
-    
-    // To-Do: Implement a technician's availability list to sort through. The issue is knowing where to place the list. Maybe in the Users,java class?
     
 }

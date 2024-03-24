@@ -4,6 +4,9 @@ import java.io.*;
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import ui.Technician.TechnicianHomePage;
+import utils.ReadInfo;
+import utils.Technician;
 
 public class Login extends javax.swing.JFrame {
     
@@ -11,6 +14,7 @@ public class Login extends javax.swing.JFrame {
     private String userRole;
     private BufferedReader br;
     private BufferedWriter bw;
+    private Technician tech;
 
     // Initialize formatter function
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy h:mma");
@@ -128,6 +132,20 @@ public class Login extends javax.swing.JFrame {
             }
             else if ("Technician".equals(userRole)){
                 JOptionPane.showMessageDialog(this, "Logged in as Technician", "Login Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                String[][] resultData = ReadInfo.getData(2, "1,2", "data/technician.txt");
+                String technicianSkill = null;
+                for (String[] row : resultData) {
+                    if (row[0].equals(enteredUsername)) {
+                       technicianSkill = row[1]; 
+                    }
+                }
+                // Technician instance:
+                Technician tech = new Technician(enteredUsername, enteredPassword, technicianSkill);
+                
+                this.tech = tech;
+                
+                new TechnicianHomePage(tech).setVisible(true);
             }
 
             try {
