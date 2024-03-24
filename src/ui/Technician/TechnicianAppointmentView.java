@@ -81,6 +81,15 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         jLabelStatus.setText(status);
         jLabelReceiptID.setText(receiptID);
         
+        
+        
+        
+//        if (!paymentTime.equals("NULL")) {
+//            System.out.println("Payment Time: " + paymentTime);
+//            btnAppointmentCompleted.setVisible(false);
+//            jLabelAppointmentCompletionTime.setText("Hi!");
+//        }
+        
         jLabelUserPaymentStatus.setText(paymentStatus);
         jLabelUserPaymentTime.setText(paymentTime);
         jLabelAppointmentCompletionTime.setText(requestCompletionTime);
@@ -403,7 +412,8 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         
         Technician.updateReceipt("data/receipt.txt", jLabelReceiptID.getText(), jLabelAppointmentID.getText(), userFeedback, jLabelUserPaymentStatus.getText(), formattedDateTime, textfieldRM.getText(), textareaTechnicianComment.getText());
         
-        System.out.println("Button pressed");
+        new TechnicianHomePage().setVisible(true);
+        this.dispose();
         
         
     }//GEN-LAST:event_btnReturnActionPerformed
