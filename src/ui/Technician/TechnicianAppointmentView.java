@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import utils.CSVParser;
 import utils.ReadInfo;
+import utils.Technician;
 
 /**
  *
@@ -17,7 +18,27 @@ import utils.ReadInfo;
  */
 public class TechnicianAppointmentView extends javax.swing.JFrame {
     
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy h:mma");
+    private String appointmentID;
+    private String managerID;
+    private String manager;
+    private String userID;
+    private String user;
+    private String technicianID;
+    private String technician;
+    private String userContext;
+    private String timeSubmitted;
+    private String status;
+    private String requestCompletionTime;
+    private String userComment;
+    private String receiptID;
+    private String receiptAppointmentID;
+    private String userFeedback;
+    private String paymentStatus;
+    private String paymentTime;
+    private String paymentMade;
+    private String technicianComment;
+    
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM uuuu");
 
     /**
      * Creates new form TechnicianAppointmentView
@@ -66,6 +87,12 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         textareaUserComment.setText(userComment);
         textareaUserFeedback.setText(userFeedback);
         textareaTechnicianComment.setText(technicianComment);
+        
+        if (paymentStatus.equals("COMPLETED")) {
+            textfieldRM.setText(paymentMade);
+            textfieldRM.setEditable(false);
+            btnPaymentConfirmation.setVisible(false);
+        }
         
     }
 
@@ -155,16 +182,16 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         textareaTechnicianComment.setRows(5);
         jScrollPane4.setViewportView(textareaTechnicianComment);
 
-        btnReturn.setText("Back");
+        btnReturn.setText("Save and Return");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturnActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Completed", "Not Completed" }));
 
-        jLabel14.setText("User paid:");
+        jLabel14.setText("Payment status:");
 
         jLabel15.setText("Payment date:");
 
@@ -236,7 +263,7 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelAppointmentID)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelUser)
@@ -269,21 +296,17 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel15)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnReturn))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelUserPaymentTime, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel16)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textfieldRM, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(btnPaymentConfirmation)))))
-                .addGap(0, 50, Short.MAX_VALUE))
+                        .addComponent(jLabelUserPaymentTime, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textfieldRM, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPaymentConfirmation))
+                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,11 +362,35 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
+        //jComboBox1.setSelectedIndex(0);
+
+        // To-Do: Setup if statement to check file for status data.
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         // TODO add your handling code here:
+        
+//        String strtextareaUser = textareaUser.getText();
+//        String strtextareaUserComment = textareaUserComment.getText();
+//        String strtextareaUserFeedback = textareaUserFeedback.getText();
+        String strtextareaTechnicianComment = textareaTechnicianComment.getText(); // Receipt.txt
+        String strtextfieldRM = textfieldRM.getText(); // Receipt.txt
+        
+        // Appointment updates:
+        
+        // Request completion date, request status
+        
+        // Receipt updates:
+        LocalDateTime now = LocalDateTime.now();
+        String formattedDateTime = formatter.format(now);
+        
+        Technician.updateReceipt("data/receipt.txt", "R1", jLabelAppointmentID.getText(), userFeedback, jLabelUserPaymentStatus.getText(), formattedDateTime, textfieldRM.getText(), textareaTechnicianComment.getText());
+        
+        System.out.println("Button pressed");
+        
+        
     }//GEN-LAST:event_btnReturnActionPerformed
 
     private void btnPaymentConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentConfirmationActionPerformed
@@ -357,7 +404,7 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         
         
         
-        
+        jLabelUserPaymentStatus.setText("COMPLETED");
         jLabelUserPaymentTime.setText(formattedDateTime);
         jLabelUserPaymentStatus.setText("COMPLETED");
         btnPaymentConfirmation.setVisible(false);

@@ -4,6 +4,15 @@
  */
 package utils;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Preston
@@ -42,9 +51,45 @@ public class Technician extends User {
         // To-Do: Update Technicians.txt data. Index [3]
     }
     
-    public void updateAppointment(String updatedValue, int index) {
-        // To-Do: Code to update the file. The other methods should call this method instead.
+    public static void updateReceipt(String filePath, String receiptID, String appointmentID,
+                                     String userFeedback, String paymentStatus, String userPaymentTime,
+                                     String userPaymentAmount, String technicianComment) {
+        File file = new File(filePath);
+        StringBuilder newData = new StringBuilder();
+
+        // Read the file and store its contents
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length > 0 && parts[0].equals(receiptID)) {
+                    // Update the row
+                    newData.append(receiptID).append(", ").append(appointmentID).append(", ");
+                    newData.append(userFeedback != null ? "\"" + userFeedback + "\"" : "NULL").append(", ");
+                    newData.append(paymentStatus != null ? paymentStatus : "NULL").append(", ");
+                    newData.append(userPaymentTime != null ? userPaymentTime : "NULL").append(", ");
+                    newData.append(userPaymentAmount != null ? userPaymentAmount : "NULL").append(", ");
+                    newData.append(technicianComment != null ? "\"" + technicianComment + "\"" : "NULL");
+                    newData.append(System.lineSeparator());
+                } else {
+                    newData.append(line).append(System.lineSeparator());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Write the updated contents back to the file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.write(newData.toString());
+            System.out.println("Receipt updated successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
     
     // To-Do: Implement a technician's availability list to sort through. The issue is knowing where to place the list. Maybe in the Users,java class?
     

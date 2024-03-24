@@ -1,3 +1,3 @@
-R1, AP1, NULL, NOT COMPLETE, NULL, NULL, NULL
+R1, AP1, NULL, COMPLETED, Sunday 24 March 2024, 13, "Updated"
 R2, AP2, "Amazing!", COMPLETED, Sunday 3 March 2024, 200, "Red wire short-circuited."
 R3, AP3, NULL, NOT COMPLETE, NULL, NULL, NULL
