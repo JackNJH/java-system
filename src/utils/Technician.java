@@ -11,7 +11,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import utils.ReadInfo;
 
 /**
  *
@@ -29,17 +31,114 @@ public class Technician extends User {
         super(username, password);
         technicianSkill = skill;
         setRole("Technician");
+        System.out.println("Username before getTechnicianID: " + username);
+        this.technicianID = getTechnicianID();
     }
     
     public Technician(String username, String password) {
         super(username, password);
         setRole("Technician");
+        System.out.println("Username before getTechnicianID: " + username);
+        this.technicianID = getTechnicianID();
     }
+    
+    public String getTechnicianID() {
+        String[][] resultData = ReadInfo.getData(2, "0,1", "data/technician.txt");
+        String result = null;
+        for (String[] row : resultData ) {
+            if (row[1].equals(this.returnUsername())) {
+                result = row[0];
+                System.out.println("Set result to: " + result);
+            }
+        }
+        return result;
+        
+        
+    }
+    
+//    public void initializeTechnicianID() {
+//        this.technicianID = getTechnicianID();
+//    }
     
     public void setSkill(String skill) {
         technicianSkill = skill;
         // To-Do: Update Technicians.txt data Index [2]
+        
+//        System.out.println("Technician ID: " + technicianID);
+//        System.out.println("Skill: " + skill);
+        
+        String filePath = "data/technician.txt";
+        File file = new File(filePath);
+        StringBuilder newData = new StringBuilder();
+
+        
+        System.out.println("TechnicianID: " + technicianID);
+        // Read the file and update technician skillset
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length >= 0 && parts[0].equals(technicianID)) {
+                    parts[2] = skill; // Update skillset
+                    line = String.join(", ", parts);
+                }
+                newData.append(line).append(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Write the updated contents back to the file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.write(newData.toString());
+            System.out.println("Technician skillset updated successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void setAvailability(boolean availability) {
+        this.technicianAvailability = availability;
+        
+        String filePath = "data/technician.txt";
+        File file = new File(filePath);
+        StringBuilder newData = new StringBuilder();
+
+        // Read the file and update technician availability
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length >= 0 && parts[0].equals(technicianID)) {
+                    parts[3] = availability ? "AVAILABLE" : "UNAVAILABLE"; // Update availability with shorthand if else statement
+                    line = String.join(", ", parts);
+                }
+                newData.append(line).append(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Write the updated contents back to the file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.write(newData.toString());
+            System.out.println("Technician availability updated successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     public void assignedTask() {
         this.technicianAvailability = false;

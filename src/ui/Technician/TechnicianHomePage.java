@@ -8,8 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import ui.Login;
 import utils.CSVParser;
 import utils.ReadInfo;
 import utils.Technician;
@@ -49,6 +52,8 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         appointmentsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +61,11 @@ public class TechnicianHomePage extends javax.swing.JFrame {
         jLabel1.setText("Technician Home Page");
 
         jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,6 +129,10 @@ public class TechnicianHomePage extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electrician", "Engineer", "Mechanic" }));
 
+        jLabel3.setText("Set availability:");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "NOT AVAILABLE" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,7 +150,11 @@ public class TechnicianHomePage extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -155,7 +173,9 @@ public class TechnicianHomePage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -178,9 +198,47 @@ public class TechnicianHomePage extends javax.swing.JFrame {
                 tech.setSkill(selectedValue);
             }
         });
+        String[][] resultData2 = ReadInfo.getData(2, "1,3", "data/technician.txt");
+        String result2 = null;
+
+        for (String[] row : resultData2) {
+            if (row[0].equals(tech.returnUsername())) {
+                result2 = row[1];
+            }
+            if (result2.equals("AVAILABLE")) {
+                jComboBox2.setSelectedItem("AVAILABLE");
+            } else if (result2.equals("NOT AVAILABLE")) {
+                jComboBox2.setSelectedItem("NOT AVAILABLE");
+            }
+        }
+
+        jComboBox2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Store the selected value in a variable
+                String selectedValue = jComboBox2.getSelectedItem().toString();
+
+                if (selectedValue.equals("AVAILABLE")) {
+                    tech.setAvailability(true);
+                } else if (selectedValue.equals("NOT AVAILABLE")) {
+                    tech.setAvailability(false);
+                }
+            }
+        });
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        tech = null;
+        try {
+            new Login().setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(TechnicianHomePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,8 +318,10 @@ public class TechnicianHomePage extends javax.swing.JFrame {
     private javax.swing.JTable appointmentsTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
