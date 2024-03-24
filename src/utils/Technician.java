@@ -140,19 +140,7 @@ public class Technician extends User {
     }
     
     
-    public void assignedTask() {
-        this.technicianAvailability = false;
-        // To-Do: Update Technicians.txt data. Index [3]
-    }
-    
-    public void completedTask() {
-        this.technicianAvailability = true;
-        // To-Do: Update Technicians.txt data. Index [3]
-    }
-    
-    public static void updateReceipt(String filePath, String receiptID, String appointmentID,
-                                     String userFeedback, String paymentStatus, String userPaymentTime,
-                                     String userPaymentAmount, String technicianComment) {
+    public static void updateReceipt(String filePath, String receiptID, String appointmentID, String userFeedback, String paymentStatus, String userPaymentTime, String userPaymentAmount, String technicianComment) {
         File file = new File(filePath);
         StringBuilder newData = new StringBuilder();
 
@@ -188,48 +176,8 @@ public class Technician extends User {
         }
     }
     
-//    public static void updateAppointment(String appointmentID, String newRequestStatus) {
-//        String filePath = "data/appointment.txt";
-//        File file = new File(filePath);
-//        StringBuilder newData = new StringBuilder();
-//
-//        // Read the file and store its contents
-//        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                System.out.println("Line read: " + line);
-//                String[] parts = line.split(", ");
-//                if (parts.length > 0 && parts[0].equals(appointmentID)) {
-//                    // Update the row
-//                    newData.append(appointmentID).append(", ");
-//                    newData.append(parts[1]).append(", "); // managerID
-//                    newData.append(parts[2]).append(", "); // customerID
-//                    newData.append(parts[3]).append(", "); // technicianID
-//                    newData.append(parts[4]).append(", "); // customerRequest
-//                    newData.append(parts[5]).append(", "); // requestDate
-//                    newData.append(newRequestStatus != null ? newRequestStatus : "NULL").append(", "); // requestStatus
-//                    newData.append(parts[7]).append(", "); // requestCompletionDate
-//                    newData.append(parts[8] != null ? parts[8] : "NULL"); // customerComment
-//                    newData.append(System.lineSeparator());
-//                } else {
-//                    newData.append(line).append(System.lineSeparator());
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return;
-//        }
-//
-//        // Write the updated contents back to the file
-//        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-//            bw.write(newData.toString());
-//            System.out.println("Appointment updated successfully.");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
     
-        public static void updateAppointment(String appointmentID, String newRequestStatus, String requestCompletionTime) {
+    public static void updateAppointment(String appointmentID, String newRequestStatus, String requestCompletionTime) {
         String filePath = "data/appointment.txt";
         File file = new File(filePath);
         StringBuilder newData = new StringBuilder();

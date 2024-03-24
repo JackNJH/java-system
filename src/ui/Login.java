@@ -141,7 +141,7 @@ public class Login extends javax.swing.JFrame {
                     }
                 }
                 // Technician instance:
-                Technician tech = new Technician(enteredUsername, enteredPassword, technicianSkill);
+                Technician tech = new Technician(enteredUsername, enteredPassword, technicianSkill); 
                 
                 this.tech = tech;
                 
