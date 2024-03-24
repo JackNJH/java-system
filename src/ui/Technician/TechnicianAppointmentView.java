@@ -85,6 +85,9 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         jLabelStatus.setText(status);
         jLabelReceiptID.setText(receiptID);
         jLabelAppointmentCompletionTime.setText(requestCompletionTime);
+        if (!jLabelAppointmentCompletionTime.getText().equals("NULL")) {
+            btnAppointmentCompleted.setVisible(false);
+        }
         
         
         jLabelUserPaymentStatus.setText(paymentStatus);
