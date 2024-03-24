@@ -453,7 +453,11 @@ public class TechnicianAppointmentView extends javax.swing.JFrame {
         jLabelAppointmentCompletionTime.setText(formattedDateTime);
         jLabelStatus.setText("COMPLETED");
         
+        Technician.updateAppointment(jLabelAppointmentID.getText(), "COMPLETED");
+        
         btnAppointmentCompleted.setVisible(false);
+        
+        
         
         // To-Do: Add code to update the data file. Maybe through the technician object.
     }//GEN-LAST:event_btnAppointmentCompletedActionPerformed

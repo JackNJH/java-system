@@ -98,6 +98,7 @@ public class Technician extends User {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
+                System.out.println("Line read: " + line);
                 String[] parts = line.split(", ");
                 if (parts.length > 0 && parts[0].equals(appointmentID)) {
                     // Update the row
