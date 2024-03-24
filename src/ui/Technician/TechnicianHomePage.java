@@ -21,7 +21,6 @@ public class TechnicianHomePage extends javax.swing.JFrame {
      */
     public TechnicianHomePage() {
         initComponents();
-//        displayAppointments(4, "0,1,2,3");
     }
 
     /**

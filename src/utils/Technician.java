@@ -42,7 +42,7 @@ public class Technician extends User {
         // To-Do: Update Technicians.txt data. Index [3]
     }
     
-    public void updateTechnician(String updatedValue, int index) {
+    public void updateAppointment(String updatedValue, int index) {
         // To-Do: Code to update the file. The other methods should call this method instead.
     }
     
