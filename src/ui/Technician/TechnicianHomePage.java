@@ -203,12 +203,17 @@ public class TechnicianHomePage extends javax.swing.JFrame {
 
         for (String[] row : resultData2) {
             if (row[0].equals(tech.returnUsername())) {
+                System.out.println("Returned username: " + tech.returnUsername());
                 result2 = row[1];
-            }
-            if (result2.equals("AVAILABLE")) {
-                jComboBox2.setSelectedItem("AVAILABLE");
-            } else if (result2.equals("NOT AVAILABLE")) {
-                jComboBox2.setSelectedItem("NOT AVAILABLE");
+                System.out.println("Result2: " + result2);
+
+                if (result2.equals("AVAILABLE")) {
+                    jComboBox2.setSelectedItem("AVAILABLE");
+                } else if (result2.equals("NOT AVAILABLE")) {
+                    jComboBox2.setSelectedItem("NOT AVAILABLE");
+
+                }
+                break;
             }
         }
 
