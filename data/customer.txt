@@ -3,3 +3,4 @@ C2, Pronto, TestRoom2
 C3, Jonas, TestRoom3
 C4, Scott, TestRoom4
 C5, Jaccques, 502
+C6, June, TestRoom10
